@@ -15,14 +15,11 @@ author:xcc
 class betamemory : public retenode{
 public:
 	//
-	betamemory(const std::string type,std::list<boost::shared_ptr<retenode>> children, boost::shared_ptr<retenode> parent,std::list<boost::shared_ptr<token>> item);
+	betamemory(const std::string &type,const std::list<boost::shared_ptr<retenode> > &children, const boost::shared_ptr<retenode> &parent,const std::list<boost::shared_ptr<token> > &item);
 	~betamemory();
-	boost::shared_ptr<retenode> getparent();
-	std::list<boost::shared_ptr<retenode>> getchildren();
-	std::string gettype();
-	boost::shared_ptr<terminalnode> getterminal()
-	void beta_memory_left_activation(boost::shared_ptr<token> t,boost::shared_ptr<WME> w);
+	void beta_memory_left_activation(boost::shared_ptr<token> &t,boost::shared_ptr<WME> &w);
 	std::list<boost::shared_ptr<token>> gettoken();
+	void settoken(const std::list<boost::shared_ptr<token>>);
 private:
 	std::list<boost::shared_ptr<token>> _item;
 };

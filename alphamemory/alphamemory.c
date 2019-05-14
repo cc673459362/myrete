@@ -8,7 +8,7 @@ author:xcc
 #include<alphamemory.h>
 
 //construction
-alphamemory::alphamemory(std::list<boost::shared_ptr<retenode>> childrennode):_am(),_childrennode(childrennode){
+alphamemory::alphamemory(const std::list<boost::shared_ptr<retenode>> &childrennode):_am(),_childrennode(childrennode){
 
 };
 
@@ -22,7 +22,7 @@ alphamemory::~alphamemory(){
 	there are two steps:1.  add the WME to the tail of the list
 			    2. 	"notify" all the child node of the alphamemory(right-activation)
 */
-void alphamemory::addwme(boost::shared_ptr<WME> w){
+void alphamemory::addwme(boost::shared_ptr<WME> &w){
 	this->_am.push(w);//step 1
 	for(std::list<boost::shared_ptr<retenode>> ::iterator it=_childrennode.begin();it!=_childrennode.end();it++){
 		if(it->gettype=="joinnode"){
@@ -42,4 +42,13 @@ std::list<boost::shared_ptr<retenode>> alphamemory::getchildren(){
 	return _childrennode;
 }
 
+//set the list of alphamemory
+void alphamemory::setam(std::list<boost::shared_ptr<WME> > &am){
+	_am=am;
+}
+
+//set the liset of childrennode of the alphamemory
+void alphamemory::setchildren(std::list<boost::shared_ptr<retenode> > &children){
+	_childrennode=children
+}
 

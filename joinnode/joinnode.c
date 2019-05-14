@@ -9,7 +9,7 @@ author:xcc
 /********      testjoinnode     ********/
 
 //construction
-testjoinnode::testjoinnode(const std::string field_of_arg1,int condition_number_of_arg2,const std::string field_of_arg2):_field_of_arg1(field_of_arg1),_condition_number_of_arg2(condition_number_of_arg2),_field_of_arg2(field_of_arg2){
+testjoinnode::testjoinnode(const std::string &field_of_arg1,const int &condition_number_of_arg2,const std::string &field_of_arg2):_field_of_arg1(field_of_arg1),_condition_number_of_arg2(condition_number_of_arg2),_field_of_arg2(field_of_arg2){
 	
 
 }
@@ -55,7 +55,7 @@ void testjoinnode::setnumberofarg2(const int &n){
 /********        joinnode             ********/
 
 //construction
-joinnode::joinnode(const std::string type,std::list<boost::shared_ptr<retenode>> children,bost::shared_ptr<retenode> parent,boost::shared_ptr<alphamemory>   am,std::list<boost::shared_ptr<testjoinnode>> test):retenode(type,children,parent),_am(am),_test(test){
+joinnode::joinnode(const std::string &type,const std::list<boost::shared_ptr<retenode> > &children,const bost::shared_ptr<retenode> &parent,const boost::shared_ptr<alphamemory>   &am,const std::list<boost::shared_ptr<testjoinnode> > &test):retenode(type,children,parent),_am(am),_test(test){
 	
 }
 
@@ -65,30 +65,27 @@ joinnode::~joinnode(){
 
 }
 
-//get the parent node
-boost::shared_ptr<retenode> joinnode::getparent(){
-	return _parent;
-}
-
-//get tpye of node
-std::string joinnode::gettype(){
-	return _type;
-}
-
-//get the children node
-std::list<boost::shared_ptr<retenode>> joinnode::getchildren(){
-	return _children;
-}
-
-//get the terminal node
-boost::shared_ptr<terminalnode> joinnode::getterminal(){
-	return _terminal;
-}
 //get the alphamemory node
 boost::shared_ptr<alphamemory> joinnode::getam(){
 	return _am;
 }
 
+
+
+//set the parent am node
+void joinnode::setam(const boost::shared_ptr<alphamemory> &am){
+	_am=am;
+}
+
+//get the test list
+std::list<boost::shared_ptr<testjoinnode> > joinnode::gettest(){
+	return _test;
+}
+
+//set the test list
+void joinnode::settest(const std::list<boost::shared_ptr<testjoinnode> > &test){
+	_test=test;
+}
 
 // join node's combile test
 /*
@@ -96,7 +93,7 @@ boost::shared_ptr<alphamemory> joinnode::getam(){
 	the arg2 t    means the parent node's token
 	the arg3 w    means the alpha memory's new WME which active the right activation
 */
-bool performjoinnode(std::list<boost::shared_ptr<testjoinnode>> test,boost::shared_ptr<token> t,boost::shared_ptr<WME> w){
+bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,boost::shared_ptr<token> &t,boost::shared_ptr<WME> &w){
 	for(std::list<boost::shared_ptr<testjoinnode>>::iterator it=test.begin();it!=test.end();it++){
 		std::string arg1=it->getarg1();
 		if(arg1=="identifier"){
@@ -143,7 +140,7 @@ bool performjoinnode(std::list<boost::shared_ptr<testjoinnode>> test,boost::shar
 	the step to finish the right activation is:1. retireve the parent's token list,if some of token and the w is test true, then 2
 					    	   2. left activation the betamemory,also means pass the new token to the children node
 */
-void joinnode::join_node_right_activation(boost::shared_ptr<WME> w){
+void joinnode::join_node_right_activation(boost::shared_ptr<WME> &w){
 	boost::shared_ptr<retenode> parent=this->getparent();
 	std::list<boost::shared_ptr<token>> partoken=parent->gettoken();
 	for(std::list<boost::shared_ptr<token>>::iterator it=partoken.begin();it!=partoken.end();it++){
@@ -156,7 +153,7 @@ void joinnode::join_node_right_activation(boost::shared_ptr<WME> w){
 }
 
 //the joinnode was left activation by it's parent->left_betamemroy_activation
-void joinnode::join_node_left_activation(boost::shared_ptr<token> t){
+void joinnode::join_node_left_activation(boost::shared_ptr<token> &t){
 	boost::shared_ptr<alphamemory> am=this->getam();
 	std::list<boost::shared_ptr<WME>> wmes=am->getam();
 	for(std::list<boost::shared_ptr<WME>> ::iterator it=wmes.begin();it!=wmes.end();it++){

@@ -13,11 +13,13 @@ author:xcc
 #include<boost/make_shared.hpp>
 class alphamemory{
 public:
-	alphamemory(std::list<boost::shared_ptr<retenode>> childrennode);
+	alphamemory(const std::list<boost::shared_ptr<retenode>> &childrennode);
 	~alphamemory();
-	void addwme(boost::shared_ptr<WME> w);
+	void addwme(boost::shared_ptr<WME> &w);
 	std::list<boost::shared_ptr<WME>> getam();
-	std::list<boost::shared_ptr<retenode>> getchildren();
+	void setam(std::list<boost::shared_ptr<WME> > &am);
+	std::list<boost::shared_ptr<retenode> > getchildren();
+	void setchildren(std::list<boost::shared_ptr<retenode> > &children);
 private:
 	std::list<boost::shared_ptr<WME>> _am;
 	std::list<boost::shared_ptr<retenode>> _childrennode;

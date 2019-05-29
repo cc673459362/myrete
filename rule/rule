@@ -1,5 +1,7 @@
 LHS:
-temprature 30 MAX_INT
-windows close close
+temprature = 30,9999
+windows = 0
+rain = 0
 RHS:
-windows open open
+windows = 1
+

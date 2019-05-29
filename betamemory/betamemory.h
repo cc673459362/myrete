@@ -8,19 +8,46 @@ author:xcc
 
 #ifndef BETAMEMORY
 #define BETAMEMORY
-#include "retenode.h"
+#include "joinnode.h"
+#include "token.h"
 #include <memory>
 #include<boost/smart_ptr.hpp>
 #include<boost/make_shared.hpp>
-class betamemory : public retenode{
+class betamemory{
 public:
-	//
-	betamemory(const std::string &type,const std::list<boost::shared_ptr<retenode> > &children, const boost::shared_ptr<retenode> &parent,const std::list<boost::shared_ptr<token> > &item);
+	//construction
+	betamemory(const std::list<boost::shared_ptr<joinnode> > &children, const boost::shared_ptr<joinnode> &parent,const std::list<boost::shared_ptr<token> > &item);
+	
+	//default construction
+	betamemory();
+
+	//destroy 
 	~betamemory();
-	void beta_memory_left_activation(boost::shared_ptr<token> &t,boost::shared_ptr<WME> &w);
-	std::list<boost::shared_ptr<token>> gettoken();
-	void settoken(const std::list<boost::shared_ptr<token>>);
+
+	//get parent node
+	boost::shared_ptr<joinnode> getparent();
+
+	//set parent node
+	bool setparent(const boost::shared_ptr<joinnode> &parent);
+
+	//get children node
+	std::list<boost::shared_ptr<joinnode> > getchildren();
+
+	//set children node
+	bool setchildren(const std::list<boost::shared_ptr<joinnode> > &children);
+
+	//node left activation
+	bool beta_memory_left_activation(boost::shared_ptr<token> &t,boost::shared_ptr<myWME> &w);
+
+	//get token
+	std::list<boost::shared_ptr<token> > gettoken();
+
+	//set token
+	bool settoken(const std::list<boost::shared_ptr<token> >);
 private:
-	std::list<boost::shared_ptr<token>> _item;
+	
+	std::list<boost::shared_ptr<joinnode> > _children;
+	boost::shared_ptr<joinnode> _parent;
+	std::list<boost::shared_ptr<token> > _item;
 };
 #endif

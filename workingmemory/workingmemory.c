@@ -9,7 +9,7 @@ author:xcc
 #include "workingmemory.h"
 
 //construction
-workingmemory::workingmemory(boost::shared_ptr<alphanode> root):_wm(),_root(root){
+workingmemory::workingmemory(boost::shared_ptr<alphanode> &root):_wm(),_root(root){
 
 }
 
@@ -18,16 +18,16 @@ workingmemory::~workingmemory(){
 
 }
 
-//add a WME to WM
+//add a myWME to WM
 
-void workingmemory::addwme(boost::shared_ptr<WME> w){
+void workingmemory::addmyWME(boost::shared_ptr<myWME> &w){
 	this->_wm.push_back(w);
 	root->alphanodeactivation(w)
 
 }
 
-//remove a WME in WM 
-void workingmemory::removewme(boost::shared_ptr<WME> w){
+//remove a myWME in WM 
+void workingmemory::removemyWME(boost::shared_ptr<myWME> &w){
 
 } //to be done
 

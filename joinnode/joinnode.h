@@ -8,22 +8,25 @@ author:xcc
 
 #ifndef JOINNODE
 #define JOINNODE
-#include "retenode.h"
+
+#include "terminalnode.h"
 #include<string>
 #include<list>
-#include<alphamemory>
 #include<boost/smart_ptr.hpp>
 #include<boost/make_shared.hpp>
+class alphamemory;
+class  betamemory;
 class testjoinnode{
 public:
 	testjoinnode(const std::string &field_of_arg1,const int &condition_number_of_arg2,const std::string &field_of_arg2);
+	testjoinnode();
 	~testjoinnode();
 	std::string getarg1();
 	std::string getarg2();
 	int getnumberofarg2();
-	void setarg1(const std::string &arg1);
-	void setarg2(const std::string &arg2);
-	void setnumberofarg2(const int &n);
+	bool setarg1(const std::string &arg1);
+	bool setarg2(const std::string &arg2);
+	bool setnumberofarg2(const int &n);
 	//
 	
 
@@ -32,30 +35,60 @@ private:
 	int _condition_number_of_arg2;
 	std::string _field_of_arg2;
 };
-class joinnode : public retenode{
+class joinnode{
 public:
-	//
-	joinnode(const std::string &type,const std::list<boost::shared_ptr<retenode> > &children,const bost::shared_ptr<retenode> &parent,const boost::shared_ptr<alphamemory>   &am,const std::list<boost::shared_ptr<testjoinnode> > &test);
+	//construction
+	joinnode(const std::list<boost::shared_ptr<betamemory> > &children,const boost::shared_ptr<betamemory> &parent,const boost::shared_ptr<terminalnode> &terminal,const boost::shared_ptr<alphamemory>   &am,const std::list<boost::shared_ptr<testjoinnode> > &test);
+	
+	//default construction
+	joinnode();
+	
+	//destroy
 	~joinnode();
-	//boost::shared_ptr<retenode> getparent();
-	//void setparent(boost::shared_ptr<retenode> &parent);//
-	//std::list<boost::shared_ptr<retenode> > getchildren();
-	//void setchildren(std::list<boost::shared_ptr<retenode> > &children);//
-	//std::string gettype();
-	//void settype(const std::string &type);//
-	//boost::shared_ptr<terminalnode> getterminal();
-	//void setterminal(boost::shared_ptr<terminalnode> &terminal);//
+
+	//get parent
+	boost::shared_ptr<betamemory> getparent();
+
+	//set parent
+	bool setparent(boost::shared_ptr<betamemory> &parent);
+
+	//get children
+	std::list<boost::shared_ptr<betamemory> > getchildren();
+
+	//set children
+	bool setchildren(std::list<boost::shared_ptr<betamemory> > &children);
+
+	//get terminal
+	boost::shared_ptr<terminalnode> getterminal();
+
+	//set terminal
+	bool setterminal(boost::shared_ptr<terminalnode> &terminal);
+
+	//get amparent
 	boost::shared_ptr<alphamemory> getam();
-	void setam(const boost::shared_ptr<alphamemory> &am); //
+
+	//set amparent
+	bool setam(const boost::shared_ptr<alphamemory> &am); 
+
+	//get testjoinnode
 	std::list<boost::shared_ptr<testjoinnode> > gettest();
-	void settest(const std::list<boost::shared_ptr<testjoinnode> > &test);//
-	void join_node_right_activation(boost::shared_ptr<WME> &w);
-	void join_node_left_activation(boost::shared_ptr<token> &t);
+
+	//set testjoinnode
+	bool settest(const std::list<boost::shared_ptr<testjoinnode> > &test);
+
+	//right activation by WME
+	bool join_node_right_activation(boost::shared_ptr<myWME> &w);
+
+	//left activation by token
+	bool join_node_left_activation(boost::shared_ptr<token> &t);
 	
 private:
+	boost::shared_ptr<terminalnode> _terminal;
+	std::list<boost::shared_ptr<betamemory> > _children;
+	boost::shared_ptr<betamemory> _parent;
 	boost::shared_ptr<alphamemory> _am;
 	std::list<boost::shared_ptr<testjoinnode> > _test;
 };
 
-bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,boost::shared_ptr<token> &t,boost::shared_ptr<WME> &w);
+bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,boost::shared_ptr<token> &t,boost::shared_ptr<myWME> &w);
 #endif

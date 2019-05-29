@@ -8,8 +8,13 @@ author:xcc
 #include "retenode.h"
 
 //construction
-retenode::retenode(const std::string& type,const std::list<boost::shared_ptr<retenode>> &children,const boost::shared_ptr<retenode> &parent):_type(type),_children(children),_parent(parent){
+retenode::retenode(const std::string& type,const std::list<boost::shared_ptr<retenode>> &children,const boost::shared_ptr<retenode> &parent,const boost::shared_ptr<terminalnode> &_terminal):_type(type),_children(children),_parent(parent),_terminal(terminal){
 
+}
+
+//default construction1
+retenode::retenode(const std::string& type):_type(type),_terminal(),_children(),_parent(){
+	
 }
 
 //destory

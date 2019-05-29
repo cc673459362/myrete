@@ -9,20 +9,23 @@ author:xcc
 #ifndef ALPHAMEMORY
 #define ALPHAMEMORY
 #include<list>
+#include "myWME.h"
+#include "joinnode.h"
 #include<boost/smart_ptr.hpp>
 #include<boost/make_shared.hpp>
 class alphamemory{
 public:
-	alphamemory(const std::list<boost::shared_ptr<retenode>> &childrennode);
+	alphamemory(const std::list<boost::shared_ptr<joinnode> > &childrennode);
+	alphamemory();
 	~alphamemory();
-	void addwme(boost::shared_ptr<WME> &w);
-	std::list<boost::shared_ptr<WME>> getam();
-	void setam(std::list<boost::shared_ptr<WME> > &am);
-	std::list<boost::shared_ptr<retenode> > getchildren();
-	void setchildren(std::list<boost::shared_ptr<retenode> > &children);
+	void addmyWME(boost::shared_ptr<myWME> &w);
+	std::list<boost::shared_ptr<myWME> > getam();
+	void setam(std::list<boost::shared_ptr<myWME> > &am);
+	std::list<boost::shared_ptr<joinnode> > getchildren();
+	void setchildren(std::list<boost::shared_ptr<joinnode> > &children);
 private:
-	std::list<boost::shared_ptr<WME>> _am;
-	std::list<boost::shared_ptr<retenode>> _childrennode;
+	std::list<boost::shared_ptr<myWME> > _am;
+	std::list<boost::shared_ptr<joinnode> > _childrennode;
 
 };
 

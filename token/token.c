@@ -8,7 +8,7 @@ author:xcc
 #include "token.h"
 
 //construction
-token::token(const int &num,boost::shared_ptr<token> &front,boost::shared_ptr<WME> &wme):_num(num),_front(front),_wme(wme){
+token::token(const int &num,const boost::shared_ptr<token> &front,const boost::shared_ptr<myWME> &myWME):_num(num),_front(front),_myWME(myWME){
 	
 }
 
@@ -22,9 +22,9 @@ boost::shared_ptr<token> token::getfront(){
 	return _front;
 }
 
-//get the current wme
-boost::shared_ptr<WME> token::getwme(){
-	return _wme;
+//get the current myWME
+boost::shared_ptr<myWME> token::getmyWME(){
+	return _myWME;
 }
 
 //get the number of the condition in the token

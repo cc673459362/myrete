@@ -9,15 +9,21 @@ author:xcc
 #define TERMINALNODE
 #include<list>
 #include<string>
+#include "token.h"
+#include "myWME.h"
+#include<boost/smart_ptr.hpp>
+#include<boost/make_shared.hpp>
 class terminalnode{
 public:
-	terminalnode(std::list<std::shared_ptr<token>> lefttoken,std::string num);
+	terminalnode(const std::list<boost::shared_ptr<token> > &lefttoken,const std::string &num);
+	terminalnode(const std::string &num="0");
+	terminalnode();
 	~terminalnode();
-	bool addtoken(std::shared_ptr<token>);
+	bool addtoken(boost::shared_ptr<token>&, boost::shared_ptr<myWME>&);
 	std::string getnum();
 private:
 	std::string _num;
-	std::list<std::shared_ptr<token>> _lefttoken;
+	std::list<boost::shared_ptr<token> > _lefttoken;
 };
 
 

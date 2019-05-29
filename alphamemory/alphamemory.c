@@ -8,47 +8,51 @@ author:xcc
 #include<alphamemory.h>
 
 //construction
-alphamemory::alphamemory(const std::list<boost::shared_ptr<retenode>> &childrennode):_am(),_childrennode(childrennode){
+alphamemory::alphamemory(const std::list<boost::shared_ptr<joinnode> > &childrennode):_am(),_childrennode(childrennode){
 
 };
+
+//default construction
+alphamemory::alphamemory():_am(),_childrennode(){
+
+}
 
 //destroy
 alphamemory::~alphamemory(){
 
 }
 
-//add a  WME to the alpha memory
+//add a  myWME to the alpha memory
 /*
-	there are two steps:1.  add the WME to the tail of the list
+	there are two steps:1.  add the myWME to the tail of the list
 			    2. 	"notify" all the child node of the alphamemory(right-activation)
 */
-void alphamemory::addwme(boost::shared_ptr<WME> &w){
-	this->_am.push(w);//step 1
-	for(std::list<boost::shared_ptr<retenode>> ::iterator it=_childrennode.begin();it!=_childrennode.end();it++){
-		if(it->gettype=="joinnode"){
-			it->join_node_right_activation(w); //step 2
-		}
+void alphamemory::addmyWME(boost::shared_ptr<myWME> &w){
+	this->_am.push_back(w);//step 1
+	for(std::list<boost::shared_ptr<joinnode> > ::iterator it=_childrennode.begin();it!=_childrennode.end();it++){
+		(*it)->join_node_right_activation(w); //step 2
+		
 	}
 
 }
 
 //get the list of alphamemory
-std::list<boost::shared_ptr<WME>> alphamemory::getam(){
+std::list<boost::shared_ptr<myWME> > alphamemory::getam(){
 	return _am;
 }
 
 //get the list of childrennode of the alphamemory
-std::list<boost::shared_ptr<retenode>> alphamemory::getchildren(){
+std::list<boost::shared_ptr<joinnode> > alphamemory::getchildren(){
 	return _childrennode;
 }
 
 //set the list of alphamemory
-void alphamemory::setam(std::list<boost::shared_ptr<WME> > &am){
+void alphamemory::setam(std::list<boost::shared_ptr<myWME> > &am){
 	_am=am;
 }
 
 //set the liset of childrennode of the alphamemory
-void alphamemory::setchildren(std::list<boost::shared_ptr<retenode> > &children){
-	_childrennode=children
+void alphamemory::setchildren(std::list<boost::shared_ptr<joinnode> > &children){
+	_childrennode=children;
 }
 

@@ -7,21 +7,21 @@ author:xcc
 
 #ifndef WORKINGMEMORY
 #define WORKINGMEMORY
-#include "WME.h"
+#include "myWME.h"
 #include "alphanode.h"
 #include<boost/smart_ptr.hpp>
 #include<boost/make_shared.hpp>
 class workingmemory{
 public:
-	workingmemory(boost::shared_ptr<alphanode> root);
+	workingmemory(boost::shared_ptr<alphanode> &root);
 	~workingmemory();
-	void addwme(boost::shared_ptr<WME> w);
-	void remove(boost::shared_ptr<WME> w);    //to be done
+	void addmyWME(boost::shared_ptr<myWME> &w);
+	void removemyWME(boost::shared_ptr<myWME> &w);    //to be done
 	void clean();	       
 	boost::shared_ptr<alphanode> getroot();
 
 private:
-	std::vector<boost::shared_ptr<WME>> _wm;
+	std::vector<boost::shared_ptr<myWME> > _wm;
 	
 	boost::shared_ptr<alphanode> _root;
 };

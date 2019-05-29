@@ -9,14 +9,15 @@ author:xcc
 #ifndef RETENODE
 #define RETENODE
 #include "token.h"
-#include "terminal.h"
+#include "terminalnode.h"
 #include<list>
 #include<string>
 #include<boost/smart_ptr.hpp>
 #include<boost/make_shared.hpp>
 class retenode{
 public:
-	retenode(const std::string& type,const std::list<boost::shared_ptr<retenode> > &children, const boost::shared_ptr<retenode> &parent);
+	retenode(const std::string& type,const std::list<boost::shared_ptr<retenode> > &children, const boost::shared_ptr<retenode> &parent,const boost::shared_ptr<terminalnode> &_terminal);
+	retenode(const std::string& type="betamemory");
 	virtual ~retenode() =0;	
 	boost::shared_ptr<retenode> getparent();
 	void setparent(const boost::shared_ptr<retenode> &parent);

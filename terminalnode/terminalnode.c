@@ -8,8 +8,18 @@ author:xcc
 #include "terminalnode.h"
 
 //construction
-terminalnode::terminalnode(std::list<std::shared_ptr<token>> lefttoken,std::string num):_lefttoken(lefttoken),_num(num){
+terminalnode::terminalnode(const std::list<boost::shared_ptr<token> > &lefttoken,const std::string &num):_lefttoken(lefttoken),_num(num){
 	
+}
+
+//default construction1
+terminalnode::terminalnode(const std::string &num):_num(num),_lefttoken(){
+	
+}
+
+//default construction2
+terminalnode::terminalnode():_num("0"),_lefttoken(){
+
 }
 
 //destroy
@@ -30,10 +40,13 @@ std::string terminalnode::getnum(){
 		  4.if response from agenda is FALSE ,then retry 2.push request .
 
 **/
-bool terminalnode::addtoken(std::shared_ptr<token> t){
-	(this->_lefttoken).push(t);//1
-	std::string s=this->getnum();
+bool terminalnode::addtoken(boost::shared_ptr<token> &t,boost::shared_ptr<myWME> &w){
+	int num=t->getnum();
+	num+=1;	
+	boost::shared_ptr<token> newt=boost::make_shared<token>(num,t,w);
+	this->_lefttoken.push_back(newt);
 	//request to agenda using num
+	std::cout<<"windows!!!!!!!!!"<<std::endl;
 
 
 	

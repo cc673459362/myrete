@@ -8,7 +8,7 @@ author:xcc
 #include "myWME.h"
 
 //construction
-myWME::myWME(const std::string &id,const std::string &attr,const std::string &value):_identifier(identifier),_attribute(attribute),_value(value){
+myWME::myWME(const std::string &id,const std::string &attr,const std::string &value):_identifier(id),_attribute(attr),_value(value){
 	
 }
 

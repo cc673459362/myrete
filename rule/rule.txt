@@ -1,6 +1,6 @@
 LHS:
-temprature time 30,9999
-windows time 0
-rain time 0
+temprature = 30,9999
+windows = 0
+rain = 0
 RHS:
-windows time 1
+windows = 1

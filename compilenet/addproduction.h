@@ -18,6 +18,7 @@ author:xcc
 #include "joinnode.h"
 #include "alphanode.h"
 #include "condition.h"
+#include "workingmemory.h"
 #include<boost/smart_ptr.hpp>
 #include<boost/make_shared.hpp>
 

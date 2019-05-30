@@ -10,6 +10,7 @@ author:xcc
 #define JOINNODE
 
 #include "terminalnode.h"
+#include<iostream>
 #include<string>
 #include<list>
 #include<boost/smart_ptr.hpp>

@@ -12,6 +12,11 @@ token::token(const int &num,const boost::shared_ptr<token> &front,const boost::s
 	
 }
 
+//default construction
+token::token():_num(1){
+
+}
+
 //destroy
 token::~token(){
 
@@ -32,3 +37,20 @@ int token::getnum(){
 	return _num;
 }
 
+//set the front token
+bool token::setfront(const boost::shared_ptr<token>& t){
+	_front=t;
+	return true;
+}
+
+//set the wme
+bool token::setmyWME(const boost::shared_ptr<myWME>& w){
+	_myWME=w;
+	return true;
+}
+
+//set the num
+bool token::setnum(const int& n){
+	_num=n;
+	return true;
+}

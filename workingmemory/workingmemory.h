@@ -9,6 +9,7 @@ author:xcc
 #define WORKINGMEMORY
 #include "myWME.h"
 #include "alphanode.h"
+#include<vector>
 #include<boost/smart_ptr.hpp>
 #include<boost/make_shared.hpp>
 class workingmemory{

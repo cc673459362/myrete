@@ -83,6 +83,9 @@ void alphanode::alphanodeactivation(boost::shared_ptr<myWME>& w){
 		if(this->_testfield=="identifier"){		
 			std::string v=w->getid();
 			if(v!=this->_minsymbol){
+				std::cout<<"identifier match failed"<<std::endl;
+				std::cout<<"wme's id = "<<v<<std::endl;
+				std::cout<<"symbol   = "<<_minsymbol<<std::endl;
 				return ;
 			}
 		}
@@ -90,6 +93,9 @@ void alphanode::alphanodeactivation(boost::shared_ptr<myWME>& w){
 		else if(this->_testfield=="attribute"){
 			std::string v=w->getattr();
 			if(v!=this->_minsymbol){
+				std::cout<<"attribute match failed"<<std::endl;		
+				std::cout<<"wme's attr = "<<v<<std::endl;
+				std::cout<<"symbol     = "<<_minsymbol<<std::endl;		
 				return ;
 			}      //because except "value" the other two field must be some real string(not int),so the condition must be "=",so the _minsymbol must be equal to the _maxsymbol since [_minsymbol,_maxsymbol)
 		}
@@ -104,7 +110,10 @@ void alphanode::alphanodeactivation(boost::shared_ptr<myWME>& w){
 			std::istringstream ss2(this->_maxsymbol);;
 			int maxn;
 			ss2>>maxn;
-			if(nv<minn||nv>=maxn){
+			if(nv<minn||nv>maxn){
+				std::cout<<"value match failed"<<std::endl;
+				std::cout<<"wme's value = "<<v<<std::endl;
+				std::cout<<"symbol      = "<<_minsymbol<<std::endl;
 				return ;
 			}
 		}
@@ -113,6 +122,7 @@ void alphanode::alphanodeactivation(boost::shared_ptr<myWME>& w){
 	}
 	if(this->_am!=NULL){ //the next node is alpha memory
 		(this->_am)->addmyWME(w);
+		std::cout<<"insert into alphamemory "<<std::endl;
 	}
 	for(std::list<boost::shared_ptr<alphanode> >::iterator it=_alp.begin();it!=_alp.end();it++){
 		(*it)->alphanodeactivation(w);

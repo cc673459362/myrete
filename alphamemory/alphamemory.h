@@ -9,6 +9,7 @@ author:xcc
 #ifndef ALPHAMEMORY
 #define ALPHAMEMORY
 #include<list>
+#include<iostream>
 #include "myWME.h"
 #include "joinnode.h"
 #include<boost/smart_ptr.hpp>

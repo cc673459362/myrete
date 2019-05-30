@@ -8,7 +8,7 @@ author:xcc
 #include "condition.h"
 
 //construction
-condition::condition(const std::string &identifier="",const std::string &attribute="",const std::string &value=""):_identifier(identifier),_attribute(attribute),_value(value){
+condition::condition(const std::string &identifier,const std::string &attribute,const std::string &value):_identifier(identifier),_attribute(attribute),_value(value){
 
 }
 

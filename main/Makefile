@@ -1,6 +1,6 @@
 CC=g++
 ROOT_DIR= ~/Downloads/drools/myrete
-
+DEBUG ?=0
 INCLUDE += -I $(ROOT_DIR)/alphamemory/
 INCLUDE += -I $(ROOT_DIR)/alphanode/
 INCLUDE += -I $(ROOT_DIR)/betamemory/
@@ -29,11 +29,16 @@ SRC += $(ROOT_DIR)/token/token.c
 SRC += $(ROOT_DIR)/WME/myWME.c
 SRC += $(ROOT_DIR)/workingmemory/workingmemory.c
 
-
+CFLAGS =
+ifeq ($(DEBUG),1)
+	CFLAGS+= -g -O0
+endif
 OBJ = $(patsubst %.c,%.o,$(SRC))
 TARGET := main
 
 all:$(OBJ)
-	$(CC) $(OBJ) $(INCLUDE) -o $(TARGET) 
+	$(CC) $(CFLAGS) $(OBJ) $(INCLUDE) -o $(TARGET) 
 $(OBJ): %.o : %.c
-	$(CC) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+clean:
+	rm -rf $(OBJ)

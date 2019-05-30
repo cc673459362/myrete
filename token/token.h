@@ -13,10 +13,14 @@ author:xcc
 class token{
 public:
 	token(const int &num,const boost::shared_ptr<token> &front,const boost::shared_ptr<myWME> &myWME);
+	token();
 	~token();
 	boost::shared_ptr<token> getfront();
 	boost::shared_ptr<myWME> getmyWME();
 	int getnum();
+	bool setfront(const boost::shared_ptr<token>&);
+	bool setmyWME(const boost::shared_ptr<myWME>&);
+	bool setnum(const int&);
 private:
 	
 	int _num;

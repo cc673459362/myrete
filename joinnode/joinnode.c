@@ -6,6 +6,8 @@ author:xcc
 */
 
 #include "joinnode.h"
+#include "alphamemory.h"
+#include "betamemory.h"
 /********      testjoinnode     ********/
 
 //construction
@@ -157,7 +159,7 @@ bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,boost::sh
 		w2.reset();// set the w2==NULL;
 		while(t){
 			if(t->getnum()==n){
-				w2=t->getwme();
+				w2=t->getmyWME();
 				break;
 			}
 			t=t->getfront();
@@ -188,35 +190,69 @@ bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,boost::sh
 	the step to finish the right activation is:1. retireve the parent's token list,if some of token and the w is test true, then 2
 					    	   2. left activation the betamemory,also means pass the new token to the children node(if there are terminal node after joinnode.also need to add token to the terminalnode)
 */
-void joinnode::join_node_right_activation(boost::shared_ptr<myWME> &w){
+bool joinnode::join_node_right_activation(boost::shared_ptr<myWME> &w){
 	boost::shared_ptr<betamemory> parent=this->getparent();
 	std::list<boost::shared_ptr<token> > partoken=parent->gettoken();
+	int n=partoken.size();
+	if(n!=0){
 	for(std::list<boost::shared_ptr<token> >::iterator it=partoken.begin();it!=partoken.end();it++){
-		if(performjoinnode(this->_test,*it,w){   //setp 1
-			if((boost::shared_ptr<terminalnode> tm=this->getterminal())!=NULL){//if has terminal node
-				tm->addtoken(*it,w);
+		if(performjoinnode(this->_test,*it,w)){   //setp 1
+			if(this->getterminal()!=NULL){//if has terminal node
+				this->getterminal()->addtoken(*it,w);
+				std::cout<<"right insert into terminalnode :"<<this->getterminal()->getnum()<<std::endl;
 			}
 			for(std::list<boost::shared_ptr<betamemory> >::iterator it2=_children.begin();it2!=_children.end();it2++ ){
-				it2->beta_memory_left_activation(*it,w); //step 2
+							  	std::cout<<"-------------------------------------"<<std::endl;
+	std::cout<<"joinnode right activation betamemory left       "<<std::endl;
+	std::cout<<"-------------------------------------"<<std::endl;
+				(*it2)->beta_memory_left_activation(*it,w); //step 2
 			}		
 		}
+		else{
+			std::cout<<"joinnode match failed!   "<<std::endl;
+		}
 	}
+	}
+	else{	
+		std::list<boost::shared_ptr<token> >::iterator it=partoken.begin();
+		if(performjoinnode(this->_test,*it,w)){   //setp 1
+			if(this->getterminal()!=NULL){//if has terminal node
+				this->getterminal()->addtoken(*it,w);
+				std::cout<<"right insert into terminalnode :"<<this->getterminal()->getnum()<<std::endl;
+			}
+			for(std::list<boost::shared_ptr<betamemory> >::iterator it2=_children.begin();it2!=_children.end();it2++ ){
+							  	std::cout<<"-------------------------------------"<<std::endl;
+	std::cout<<"joinnode right activation betamemory left  (0)     "<<std::endl;
+	std::cout<<"-------------------------------------"<<std::endl;
+				(*it2)->beta_memory_left_activation(*it,w); //step 2
+			}		
+		}
+		else{
+			std::cout<<"joinnode match failed!   "<<std::endl;
+		}
+	}
+	return true;
 }
 
 //the joinnode was left activation by it's parent->left_betamemroy_activation
-void joinnode::join_node_left_activation(boost::shared_ptr<token> &t){
+bool joinnode::join_node_left_activation(boost::shared_ptr<token> &t){
 	boost::shared_ptr<alphamemory> am=this->getam();
 	std::list<boost::shared_ptr<myWME> > wmes=am->getam();
 	for(std::list<boost::shared_ptr<myWME> > ::iterator it=wmes.begin();it!=wmes.end();it++){
-		if(performjoinnode(this->test,t,*it)){
-			if((boost::shared_ptr<terminalnode> tm=this->getterminal())!=NULL){//if has terminal node
-				tm->addtoken(t,*it);
+		if(performjoinnode(this->_test,t,*it)){
+			if(this->getterminal()!=NULL){//if has terminal node
+				this->getterminal()->addtoken(t,*it);
+				std::cout<<"left insert into terminalnode :"<<this->getterminal()->getnum()<<std::endl;
 			}
-			for(std::list<boost::shared_ptr<betamemory>::iterator it2=_children.begin();it2!=_children.end();it2++ ){
-				it2->beta_memory_left_activation(t,*it); //step 2
+			for(std::list<boost::shared_ptr<betamemory> >::iterator it2=_children.begin();it2!=_children.end();it2++ ){
+			std::cout<<"-------------------------------------"<<std::endl;
+	std::cout<<"joinnode left activation betamemory left       "<<std::endl;
+	std::cout<<"-------------------------------------"<<std::endl;
+				(*it2)->beta_memory_left_activation(t,*it); //step 2
 			}
 		}
 	}
+	return true;
 	
 }
 

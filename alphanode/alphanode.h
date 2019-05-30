@@ -14,8 +14,10 @@ author:xcc
 
 #ifndef ALPHANODE
 #define ALPHANODE
+#include<memory>
 #include<list>
 #include<string>
+#include<iostream>
 #include <sstream>
 #include "alphamemory.h"
 #include "retenode.h"

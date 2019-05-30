@@ -54,6 +54,11 @@ boost::shared_ptr<joinnode> build_or_share_join_node(boost::shared_ptr<betamemor
 	std::list<boost::shared_ptr<joinnode> > achild=am->getchildren();
 	achild.push_back(join);
 	am->setchildren(achild);
+	std::cout<<"complete create one joinnode : "<<std::endl;
+	std::cout<<"children joinnode size:        "<<std::endl; 
+	std::cout<<am->getchildren().size()<<std::endl; 
+	std::cout<<""<<std::endl; 
+	std::cout<<"-------------------------------------------------"<<std::endl;
 	return join;
 	
 
@@ -165,11 +170,16 @@ boost::shared_ptr<alphamemory> build_or_share_alphamemory(boost::shared_ptr<cond
 	currentnode=build_or_share_constant_test_node(currentnode,"attribute",attr);
 	std::string value=c->getvalue();
 	currentnode=build_or_share_constant_test_node(currentnode,"value",value);
-	if ((boost::shared_ptr<alphamemory> result=currentnode->getalphamemory())!=NULL){
-		return result;
+	if ( currentnode->getalphamemory()!=NULL){
+		return currentnode->getalphamemory();
 	}
-	boost::shared_ptr<alphamemroy> am=boost::make_shared<alphamemory>();
-	currentnode->setalphamemory(am); 
+	boost::shared_ptr<alphamemory> am=boost::make_shared<alphamemory>();
+	currentnode->setalphamemory(am);
+	std::cout<<"complete create one alphamemory from condition : "<<std::endl;
+	std::cout<<c->getid()<<std::endl; 
+	std::cout<<c->getattr()<<std::endl; 
+	std::cout<<c->getvalue()<<std::endl; 
+	std::cout<<"-------------------------------------------------"<<std::endl; 
 	return am;
 	
 }
@@ -202,8 +212,11 @@ std::list<boost::shared_ptr<condition> > createconditions(){
 				std::string attr;
 				std::string value;
 				ss>>id;
+				std::cout<<id<<" ";
 				ss>>attr;
+				std::cout<<attr<<" ";
 				ss>>value;
+				std::cout<<value<<std::endl;
 				boost::shared_ptr<condition> cond=boost::make_shared<condition>(id,attr,value);
 				result.push_back(cond);
 			}
@@ -218,7 +231,7 @@ std::list<boost::shared_ptr<condition> > createconditions(){
 	get first half symbol from symbol
 */
 std::string mygetfirst(const std::string &symbol){
-	string minsymbol;	
+	std::string minsymbol;	
 	int n=symbol.size();
 	for(int i=0;i<n;i++){
 		if(symbol[i]==','){
@@ -234,7 +247,7 @@ std::string mygetfirst(const std::string &symbol){
 	get second half symbol from symbol
 */
 std::string mygetsecond(const std::string &symbol){
-	string minsymbol;	
+	std::string minsymbol;	
 	int n=symbol.size();
 	for(int i=0;i<n;i++){
 		if(symbol[i]==','){
@@ -269,10 +282,11 @@ bool add_production(std::list<boost::shared_ptr<condition> > &lhs,boost::shared_
 		it++;
 		tests=get_join_tests_from_condition(*it,earlierconds);
 		am=build_or_share_alphamemory(*it,root);
-		currenjointnode=build_or_share_join_node(currentnode,am,tests);
+		currentjoinnode=build_or_share_join_node(currentnode,am,tests);
 	}
-	boost::shared_ptr<terminalnode > terminal;//num="0" token=NULL
-	currenjoinnode->setterminal(terminal);
+	boost::shared_ptr<terminalnode > terminal=boost::make_shared<terminalnode>();//num="0" token=NULL
+	currentjoinnode->setterminal(terminal);
+	std::cout<<currentjoinnode->getterminal()->getnum()<<std::endl;
 	
 
 	

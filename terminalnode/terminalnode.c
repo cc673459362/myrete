@@ -18,12 +18,12 @@ terminalnode::terminalnode(const std::string &num):_num(num),_lefttoken(){
 }
 
 //default construction2
-terminalnode::terminalnode():_num("0"),_lefttoken(){
+//terminalnode::terminalnode():_num("0"),_lefttoken(){
 
-}
+//}
 
 //destroy
-termianlnode::~terminalnode(){
+terminalnode::~terminalnode(){
 	
 }
 

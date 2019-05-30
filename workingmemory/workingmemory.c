@@ -22,7 +22,7 @@ workingmemory::~workingmemory(){
 
 void workingmemory::addmyWME(boost::shared_ptr<myWME> &w){
 	this->_wm.push_back(w);
-	root->alphanodeactivation(w)
+	_root->alphanodeactivation(w);
 
 }
 
@@ -32,7 +32,7 @@ void workingmemory::removemyWME(boost::shared_ptr<myWME> &w){
 } //to be done
 
 //clean the WM vector
-void clean(){
+void workingmemory::clean(){
 	_wm.clear();
 }
 

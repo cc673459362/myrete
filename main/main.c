@@ -12,9 +12,21 @@ int main(){
 	std::list<boost::shared_ptr<condition> > conditions=createconditions();
 	boost::shared_ptr<betamemory> dummynode=boost::make_shared<betamemory>();
 	boost::shared_ptr<alphanode> root=boost::make_shared<alphanode>();
+	if(root->getalphamemory()==NULL){
+		std::cout<<"root's am is null"<<std::endl;
+	}
 	root->settestfield("NO-TEST");
 	add_production(conditions,dummynode,root);
 	std::cout<<"complete compiler the net!"<<std::endl;
+	boost::shared_ptr<myWME> t=boost::make_shared<myWME>("temprature","=","32");
+	boost::shared_ptr<myWME> w=boost::make_shared<myWME>("windows","=","0");;
+	boost::shared_ptr<myWME> r=boost::make_shared<myWME>("rain","=","0");;
+	
+	workingmemory wm(root);
+	wm.addmyWME(t);
+	wm.addmyWME(w);
+	wm.addmyWME(r);
+	
 	
 		
 }

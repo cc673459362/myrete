@@ -8,6 +8,7 @@ author:xcc
 
 #ifndef BETAMEMORY
 #define BETAMEMORY
+#include <iostream>
 #include "joinnode.h"
 #include "token.h"
 #include <memory>
@@ -37,7 +38,7 @@ public:
 	bool setchildren(const std::list<boost::shared_ptr<joinnode> > &children);
 
 	//node left activation
-	bool beta_memory_left_activation(boost::shared_ptr<token> &t,boost::shared_ptr<myWME> &w);
+	bool beta_memory_left_activation(const boost::shared_ptr<token> &t,const boost::shared_ptr<myWME> &w);
 
 	//get token
 	std::list<boost::shared_ptr<token> > gettoken();

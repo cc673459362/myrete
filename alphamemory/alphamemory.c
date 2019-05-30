@@ -29,6 +29,10 @@ alphamemory::~alphamemory(){
 */
 void alphamemory::addmyWME(boost::shared_ptr<myWME> &w){
 	this->_am.push_back(w);//step 1
+	std::cout<<"-------------------------------------"<<std::endl;
+	std::cout<<"push wme into the alphamemory        "<<std::endl;
+	std::cout<<"size of children node       : "<<_childrennode.size()<<std::endl;
+	std::cout<<"-------------------------------------"<<std::endl;
 	for(std::list<boost::shared_ptr<joinnode> > ::iterator it=_childrennode.begin();it!=_childrennode.end();it++){
 		(*it)->join_node_right_activation(w); //step 2
 		

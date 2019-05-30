@@ -20,3 +20,11 @@ add_production function need tobe completed.   and the build shared alphamemory 
 
 05.29
 delete the retenode .  using joinnode and betamemory instead.    debug make error.
+
+
+05.30
+modify the function: join_left_activation and join_right_activation when parent's token.size()=0(means the joinnode's parentnode is dummynode.)
+
+modify the token's default construction and add some setfunctions.
+
+make successfully first time!!!

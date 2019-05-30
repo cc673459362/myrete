@@ -6,7 +6,8 @@ author:xcc
 */
 
 #include "terminalnode.h"
-
+#include "addproduction.h"
+std::vector<std::pair<std::string,std::string> > rhs=createrhs();
 //construction
 terminalnode::terminalnode(const std::list<boost::shared_ptr<token> > &lefttoken,const std::string &num):_lefttoken(lefttoken),_num(num){
 	
@@ -45,9 +46,20 @@ bool terminalnode::addtoken(boost::shared_ptr<token> &t,boost::shared_ptr<myWME>
 	num+=1;	
 	boost::shared_ptr<token> newt=boost::make_shared<token>(num,t,w);
 	this->_lefttoken.push_back(newt);
+	std::cout<<"there is terminalnode addtoken!"<<std::endl;
+	std::cout<<"rhs.size : "<<rhs.size()<<std::endl;
+	std::cout<<"rhs.second : "<<rhs.begin()->second<<std::endl;
+	std::cout<<"rhs.first : "<<rhs.begin()->first<<std::endl;
 	//request to agenda using num
-	std::cout<<"windows!!!!!!!!!"<<std::endl;
+	for(std::vector<std::pair<std::string,std::string> >::iterator it=rhs.begin();it!=rhs.end();it++){
+		if(it->second==_num){
+			std::cout<<"***TERMINAL   OUT***"<<std::endl;
+			std::cout<<it->first<<std::endl;
+			std::cout<<"***TERMINAL   OUT***"<<std::endl;
 
+		}
+	}
+	
 
 	
 	

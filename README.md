@@ -28,3 +28,10 @@ modify the function: join_left_activation and join_right_activation when parent'
 modify the token's default construction and add some setfunctions.
 
 make successfully first time!!!
+
+
+05.30afternoon
+
+add RHS vector. so that the terminal can print out the same number of rule's RHS.
+add arg into function add_produtin() "const string &num" to refer the number of the rule/terminal.
+add a function createrhs() can read RHS from rule.txt and save into the vector.

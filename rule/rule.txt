@@ -1,6 +1,7 @@
+rule:1
 LHS:
-temprature = 30,9999
+temprature = 33,9999
 windows = 0
 rain = 0
 RHS:
-windows = 1
+windows = 3

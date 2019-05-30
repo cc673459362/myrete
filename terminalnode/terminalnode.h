@@ -10,6 +10,7 @@ author:xcc
 #include<list>
 #include<iostream>
 #include<string>
+#include<vector>
 #include "token.h"
 #include "myWME.h"
 #include<boost/smart_ptr.hpp>

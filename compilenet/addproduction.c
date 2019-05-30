@@ -200,7 +200,10 @@ std::list<boost::shared_ptr<condition> > createconditions(){
 	if(in.is_open()){
 		while(!in.eof()){
 			getline(in,s);
-			if(s=="LHS:"){
+			if(s[0]=='r'&&s[1]=='u'&&s[2]=='l'&&s[3]=='e'){
+				continue;
+			}	
+			else if(s=="LHS:"){
 				continue;
 			}
 			else if(s=="RHS:"){
@@ -225,6 +228,43 @@ std::list<boost::shared_ptr<condition> > createconditions(){
 	return result;
 	
 
+}
+
+/*
+	create RHS vector
+
+*/
+std::vector<std::pair<std::string,std::string> > createrhs(){
+	std::vector<std::pair<std::string,std::string> >	result;
+	std::ifstream in;
+	std::string s;
+	std::string num;
+	int yes=0;
+	in.open("../rule/rule.txt",std::ios::in);
+	if(in.is_open()){
+		while(!in.eof()){
+			getline(in,s);
+			if(s[0]=='r'&&s[1]=='u'&&s[2]=='l'&&s[3]=='e'){
+				int n=s.size();
+				std::string sb=s.substr(5,n-5);
+				num=sb;
+				std::cout<<"*******************"<<std::endl;
+				std::cout<<num<<std::endl;
+			}	
+			else if(s!="RHS:"&&yes==0){
+				continue;
+			}
+			else if(s=="RHS:"){
+				yes=1;				
+				continue;
+			}
+			else {
+				result.push_back(std::make_pair(s,num));
+				yes=0;
+			}
+		}
+	}
+	return result;
 }
 
 /*
@@ -265,7 +305,7 @@ std::string mygetsecond(const std::string &symbol){
 
 
 /*******************************CREATE FULL NET FROM CONDITIONS************************/
-bool add_production(std::list<boost::shared_ptr<condition> > &lhs,boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root){
+bool add_production(std::list<boost::shared_ptr<condition> > &lhs,const std::string &num, boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root){
 	boost::shared_ptr<betamemory> currentnode=dummynode;
 	std::list<boost::shared_ptr<condition> > earlierconds;
 	std::list<boost::shared_ptr<condition> >::iterator it=lhs.begin();
@@ -284,7 +324,7 @@ bool add_production(std::list<boost::shared_ptr<condition> > &lhs,boost::shared_
 		am=build_or_share_alphamemory(*it,root);
 		currentjoinnode=build_or_share_join_node(currentnode,am,tests);
 	}
-	boost::shared_ptr<terminalnode > terminal=boost::make_shared<terminalnode>();//num="0" token=NULL
+	boost::shared_ptr<terminalnode > terminal=boost::make_shared<terminalnode>(num);//num="0" token=NULL
 	currentjoinnode->setterminal(terminal);
 	std::cout<<currentjoinnode->getterminal()->getnum()<<std::endl;
 	

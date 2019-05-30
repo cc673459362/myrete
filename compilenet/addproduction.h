@@ -12,6 +12,7 @@ author:xcc
 #include<fstream>
 #include<sstream>
 #include<string>
+#include<vector>
 #include "joinnode.h"
 #include "alphamemory.h"
 #include "betamemory.h"
@@ -98,6 +99,12 @@ boost::shared_ptr<alphamemory> build_or_share_alphamemory(boost::shared_ptr<cond
 std::list<boost::shared_ptr<condition> > createconditions();
 
 /*
+	create RHS vector from rule.txt
+	return ---> vector:rhs
+**/
+std::vector<std::pair<std::string,std::string> > createrhs();
+
+/*
 	get first half symbol from "minsymbol,maxsymbol"
 	arg1   ---> string:symbol
 	return ---> string:minsymbol
@@ -125,7 +132,7 @@ std::string mygetsecond(const std::string &symbol);
 	arg3   ---> alphanode:root
 	return ---> bool
 */
-bool add_production(std::list<boost::shared_ptr<condition> > &lhs,boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root);
+bool add_production(std::list<boost::shared_ptr<condition> > &lhs,const std::string &num,boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root);
 
 
 /*************************END OF CREATE FULL NET FROM CONDITIONS**********************/

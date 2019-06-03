@@ -1,4 +1,7 @@
 # myrete-lite
+---
+# user guide
+---
 
 05.09 finish some of betamemory . using shared_ptr to manage the new token.  should using shared_ptr in other file.
 
@@ -35,3 +38,24 @@ make successfully first time!!!
 add RHS vector. so that the terminal can print out the same number of rule's RHS.
 add arg into function add_produtin() "const string &num" to refer the number of the rule/terminal.
 add a function createrhs() can read RHS from rule.txt and save into the vector.
+
+05.31 morning  add function getdataintowm() to read the data from data/data file once a line and insert into wm.
+
+05.31night: the testjoinnode has some problem. need a way to comfirm the function. why 
+rule:1
+LHS:
+windows = 0
+rain ! 0
+temprature = 33,9999
+RHS:
+windows = open
+data:
+temprature = 35
+can successfully insert into terminal? why the last joinnode's testjoinnode will be true??
+
+06.03 night: have find the problem in function of getjointestnode(),: int id,attr,vlaue=0;this one just definate the value =0 , id and attr is random int.so change them into :
+int id=0;
+int attr=0;
+int value =0;
+beside, add some code to cout the test condition.
+

@@ -1,7 +1,12 @@
 rule:1
 LHS:
-temprature = 33,9999
 windows = 0
+temprature = 33,9999
 rain = 0
+poeple = 1
+user = 99
+key = 66
+age = 18
+male = 1
 RHS:
-windows = 3
+windows = open

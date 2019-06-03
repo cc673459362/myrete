@@ -14,7 +14,7 @@ author:xcc
 #include<boost/make_shared.hpp>
 class workingmemory{
 public:
-	workingmemory(boost::shared_ptr<alphanode> &root);
+	workingmemory(const boost::shared_ptr<alphanode> &root);
 	~workingmemory();
 	void addmyWME(boost::shared_ptr<myWME> &w);
 	void removemyWME(boost::shared_ptr<myWME> &w);    //to be done

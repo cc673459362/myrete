@@ -9,7 +9,7 @@ author:xcc
 #include "workingmemory.h"
 
 //construction
-workingmemory::workingmemory(boost::shared_ptr<alphanode> &root):_wm(),_root(root){
+workingmemory::workingmemory(const boost::shared_ptr<alphanode> &root):_wm(),_root(root){
 
 }
 

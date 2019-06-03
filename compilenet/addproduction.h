@@ -105,6 +105,12 @@ std::list<boost::shared_ptr<condition> > createconditions();
 std::vector<std::pair<std::string,std::string> > createrhs();
 
 /*
+	get data from data/data and form data to WME and insert it to wm.
+	return ---> vector:rhs
+**/
+void getdataintowm(boost::shared_ptr<workingmemory> &wm,std::ifstream &in);
+
+/*
 	get first half symbol from "minsymbol,maxsymbol"
 	arg1   ---> string:symbol
 	return ---> string:minsymbol

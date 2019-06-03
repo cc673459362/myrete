@@ -39,9 +39,11 @@ boost::shared_ptr<betamemory> build_or_share_beta_memory_node(boost::shared_ptr<
 	2.if have no child node or not equal to we wanted. create a new node. and insert it to it's am parent an parent's children list
 */
 boost::shared_ptr<joinnode> build_or_share_join_node(boost::shared_ptr<betamemory> &parent,boost::shared_ptr<alphamemory> &am,std::list<boost::shared_ptr<testjoinnode> > &test){
+	
 	std::list<boost::shared_ptr<joinnode> > child=parent->getchildren();
 	for(std::list<boost::shared_ptr<joinnode> >::iterator it=child.begin();it!=child.end();it++){
 		if((*it)->getam()==am&&(*it)->gettest()==test)	{
+				
 			return *it;
 		}
 	}
@@ -54,6 +56,7 @@ boost::shared_ptr<joinnode> build_or_share_join_node(boost::shared_ptr<betamemor
 	std::list<boost::shared_ptr<joinnode> > achild=am->getchildren();
 	achild.push_back(join);
 	am->setchildren(achild);
+	std::cout<<"-------------------------------------------------"<<std::endl; 
 	std::cout<<"complete create one joinnode : "<<std::endl;
 	std::cout<<"children joinnode size:        "<<std::endl; 
 	std::cout<<am->getchildren().size()<<std::endl; 
@@ -77,9 +80,17 @@ std::list<boost::shared_ptr<testjoinnode> > get_join_tests_from_condition(boost:
 	std::list<boost::shared_ptr<testjoinnode> > result;
 	int count=0;
 	count=earlierconds.size();
-	int id,attr,value=0;
+	int id=0;
+	int attr=0;
+	int value=0;
+	std::cout<<"@@@@@@@@@@@@@@ now condition's id "<<c->getid()<<std::endl;
+	std::cout<<"@@@@@@@@@@@@@@ now condition's attr "<<c->getattr()<<std::endl;
+	std::cout<<"@@@@@@@@@@@@@@ now condition's value "<<c->getvalue()<<std::endl;
 	for(std::list<boost::shared_ptr<condition> > :: reverse_iterator it=earlierconds.rbegin();it!=earlierconds.rend();it++){//note: the iterator of list if  bidirectional iterator,cannot using "operator-" to count the number.so we need a counter num.
 	
+	std::cout<<"@@@@@@@@@@@@@@ now earliercond id "<<(*it)->getid()<<std::endl;
+	std::cout<<"@@@@@@@@@@@@@@ now earliercond attr "<<(*it)->getattr()<<std::endl;
+	std::cout<<"@@@@@@@@@@@@@@ now earliercond value "<<(*it)->getvalue()<<std::endl;
 	if(c->getid()==(*it)->getid()&&id==0){
 		boost::shared_ptr<testjoinnode> re= boost::make_shared<testjoinnode>("identifier",count,"identifier");
 		result.push_back(re);
@@ -98,10 +109,10 @@ std::list<boost::shared_ptr<testjoinnode> > get_join_tests_from_condition(boost:
 	if(c->getattr()==(*it)->getid()&&attr==0){
 		boost::shared_ptr<testjoinnode> re= boost::make_shared<testjoinnode>("attribute",count,"identifier");
 		result.push_back(re);
-
 		attr=1;
 	}
 	if(c->getattr()==(*it)->getattr()&&attr==0){
+		std::cout<<"attr match attr!!!!!!!11"<<std::endl;
 		boost::shared_ptr<testjoinnode> re= boost::make_shared<testjoinnode>("attribute",count,"attribute");
 		result.push_back(re);
 		attr=1;
@@ -175,6 +186,7 @@ boost::shared_ptr<alphamemory> build_or_share_alphamemory(boost::shared_ptr<cond
 	}
 	boost::shared_ptr<alphamemory> am=boost::make_shared<alphamemory>();
 	currentnode->setalphamemory(am);
+	std::cout<<"-------------------------------------------------"<<std::endl; 
 	std::cout<<"complete create one alphamemory from condition : "<<std::endl;
 	std::cout<<c->getid()<<std::endl; 
 	std::cout<<c->getattr()<<std::endl; 
@@ -268,6 +280,36 @@ std::vector<std::pair<std::string,std::string> > createrhs(){
 }
 
 /*
+	get data from data file and form to WME inserted into wm.
+*/
+
+void getdataintowm(boost::shared_ptr<workingmemory> &wm,std::ifstream &in){
+	boost::shared_ptr<myWME> result;
+	std::string s;
+	std::string identifier;
+	std::string attribute;
+	std::string value;
+	if(in.is_open()){
+		while(!in.eof()){
+			getline(in,s);
+			std::istringstream ss(s);
+			ss>>identifier;
+			std::cout<<"data file identifier: "<<identifier<<std::endl;
+			ss>>attribute;
+			std::cout<<"data file attribute : "<<attribute<<std::endl;
+			ss>>value;
+			std::cout<<"data file value     : "<<value<<std::endl;
+			result=boost::make_shared<myWME>(identifier,attribute,value);
+			std::cout<<"add a WME into wm "<<std::endl;
+			wm->addmyWME(result);
+			break;
+		}
+	}
+	
+	
+}
+
+/*
 	get first half symbol from symbol
 */
 std::string mygetfirst(const std::string &symbol){
@@ -310,6 +352,19 @@ bool add_production(std::list<boost::shared_ptr<condition> > &lhs,const std::str
 	std::list<boost::shared_ptr<condition> > earlierconds;
 	std::list<boost::shared_ptr<condition> >::iterator it=lhs.begin();
 	std::list<boost::shared_ptr<testjoinnode> > tests=get_join_tests_from_condition(*it,earlierconds);
+	/** DEBUG COUT***/
+	int count =1;
+	if(tests.size()!=0){
+	for(std::list<boost::shared_ptr<testjoinnode> >::iterator it1=tests.begin();it1!=tests.end();it1++){
+		std::cout<<"test "<<count<<" arg1: "<<(*it1)->getarg1()<<std::endl;
+		std::cout<<"test "<<count<<" arg2: "<<(*it1)->getarg2()<<std::endl;
+		std::cout<<"test "<<count<<" number of arg2: "<<(*it1)->getnumberofarg2()<<std::endl;
+	}
+	}else{
+		std::cout<<"test "<<count<<"is null"<<std::endl;
+	}
+	count++;
+	/** DEBUG COUT***/
 	boost::shared_ptr<alphamemory> am=build_or_share_alphamemory(*it,root);
 	boost::shared_ptr<joinnode> currentjoinnode=build_or_share_join_node(currentnode,am,tests);
 	it++;
@@ -321,6 +376,19 @@ bool add_production(std::list<boost::shared_ptr<condition> > &lhs,const std::str
 		earlierconds.push_back(*it);
 		it++;
 		tests=get_join_tests_from_condition(*it,earlierconds);
+		/** DEBUG COUT***/
+	
+	if(tests.size()!=0){
+	for(std::list<boost::shared_ptr<testjoinnode> >::iterator it1=tests.begin();it1!=tests.end();it1++){
+		std::cout<<"test "<<count<<" arg1: "<<(*it1)->getarg1()<<std::endl;
+		std::cout<<"test "<<count<<" arg2: "<<(*it1)->getarg2()<<std::endl;
+		std::cout<<"test "<<count<<" number of arg2: "<<(*it1)->getnumberofarg2()<<std::endl;
+	}
+	}else{
+		std::cout<<"test "<<count<<"is null"<<std::endl;
+	}
+	count++;
+	/** DEBUG COUT***/
 		am=build_or_share_alphamemory(*it,root);
 		currentjoinnode=build_or_share_join_node(currentnode,am,tests);
 	}

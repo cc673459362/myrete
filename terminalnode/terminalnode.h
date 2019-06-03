@@ -21,7 +21,7 @@ public:
 	terminalnode(const std::string &num="0");
 	//terminalnode();
 	~terminalnode();
-	bool addtoken(boost::shared_ptr<token>&, boost::shared_ptr<myWME>&);
+	bool addtoken(const boost::shared_ptr<token>&, const boost::shared_ptr<myWME>&);
 	std::string getnum();
 private:
 	std::string _num;

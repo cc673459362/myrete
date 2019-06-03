@@ -91,5 +91,5 @@ private:
 	std::list<boost::shared_ptr<testjoinnode> > _test;
 };
 
-bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,boost::shared_ptr<token> &t,boost::shared_ptr<myWME> &w);
+bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,const boost::shared_ptr<token> &t,const boost::shared_ptr<myWME> &w);
 #endif

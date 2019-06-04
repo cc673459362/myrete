@@ -15,6 +15,7 @@ INCLUDE += -I $(ROOT_DIR)/token/
 INCLUDE += -I $(ROOT_DIR)/WME/
 INCLUDE += -I $(ROOT_DIR)/workingmemory/
 INCLUDE += -I $(ROOT_DIR)/terminalnode/
+INCLUDE += -I $(ROOT_DIR)/rule/
 
 SRC += $(ROOT_DIR)/main/main.c
 SRC += $(ROOT_DIR)/alphamemory/alphamemory.c
@@ -28,6 +29,7 @@ SRC += $(ROOT_DIR)/terminalnode/terminalnode.c
 SRC += $(ROOT_DIR)/token/token.c
 SRC += $(ROOT_DIR)/WME/myWME.c
 SRC += $(ROOT_DIR)/workingmemory/workingmemory.c
+SRC += $(ROOT_DIR)/rule/rule.c
 
 CFLAGS =
 ifeq ($(DEBUG),1)

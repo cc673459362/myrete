@@ -13,6 +13,7 @@ author:xcc
 #include<sstream>
 #include<string>
 #include<vector>
+#include "rule.h"
 #include "joinnode.h"
 #include "alphamemory.h"
 #include "betamemory.h"
@@ -103,6 +104,12 @@ std::list<boost::shared_ptr<condition> > createconditions();
 	return ---> vector:rhs
 **/
 std::vector<std::pair<std::string,std::string> > createrhs();
+
+/*
+	create rules from rule.txt
+	return ---> list:rule
+*/
+std::list<boost::shared_ptr<rule> > createrules();
 
 /*
 	get data from data/data and form data to WME and insert it to wm.

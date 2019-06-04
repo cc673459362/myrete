@@ -59,3 +59,9 @@ int attr=0;
 int value =0;
 beside, add some code to cout the test condition.
 
+6.04 morning
+add rule.c rule.h create rule class. add the function createrule() from rule.txt.
+this way, we can create more than one rule in the rule.txt. and the net can compile the multi-rule retenet.
+function createrule need tobe complete.
+terminal node class need tobe modified.
+function add_production may need tobe modified.

@@ -10,3 +10,12 @@ age = 18
 male = 1
 RHS:
 windows = open
+end
+
+rule:2
+LHS:
+rain = 0
+rain = 3
+RHS:
+people don't out!
+end

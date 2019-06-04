@@ -280,6 +280,42 @@ std::vector<std::pair<std::string,std::string> > createrhs(){
 }
 
 /*
+	create rules from rule.txt
+*/
+std::list<boost::shared_ptr<rule> > createrules(std::string filename){
+	std::list<boost::shared_ptr<rule> > result;
+	std::ifstream in;
+	std::string s;
+	int isrhs=0;
+	in.open("../rule/rule.txt",std::ios::in);
+	if(in.is_open()){
+		while(!in.eof()){
+			getline(in,s);
+			if(s[0]=='r'&&s[1]=='u'&&s[2]=='l'&&s[3]=='e'){
+				int n=s.size();
+				std::string sb=s.substr(5,n-5);
+				std::cout<<"****rule name is: ***** "<<sb<<std::endl;
+			}
+			else if(s == "LHS:"){
+				isrhs=0;
+				std::cout<<"****next is LHS: "<<std::endl;
+			}
+			else if(s =="RHS:"){
+				isrhs=1;
+				std::cout<<"****next is RHS: "<<std::endl;
+			}
+			else if(s!="RHS:"&&s!="LHS:"&&isrhs==0){
+				
+			}
+		}	
+	}
+
+
+
+
+}
+
+/*
 	get data from data file and form to WME inserted into wm.
 */
 

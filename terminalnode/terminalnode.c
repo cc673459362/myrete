@@ -50,6 +50,7 @@ bool terminalnode::addtoken(const boost::shared_ptr<token> &t,const boost::share
 	std::cout<<"there is terminalnode addtoken!"<<std::endl;
 	std::cout<<"rhs.size : "<<rhs.size()<<std::endl;
 	std::cout<<"rhs.second : "<<rhs.begin()->second<<std::endl;
+	std::cout<<"terminal's num : "<<this->_num<<std::endl;
 	std::cout<<"rhs.first : "<<rhs.begin()->first<<std::endl;
 	//request to agenda using num
 	for(std::vector<std::pair<std::string,std::string> >::iterator it=rhs.begin();it!=rhs.end();it++){
@@ -69,6 +70,7 @@ bool terminalnode::addtoken(const boost::shared_ptr<token> &t,const boost::share
 	std::cout<<"there is terminalnode addtoken!"<<std::endl;
 	std::cout<<"rhs.size : "<<rhs.size()<<std::endl;
 	std::cout<<"rhs.second : "<<rhs.begin()->second<<std::endl;
+	std::cout<<"terminal's num : "<<this->_num<<std::endl;
 	std::cout<<"rhs.first : "<<rhs.begin()->first<<std::endl;
 	//request to agenda using num
 	for(std::vector<std::pair<std::string,std::string> >::iterator it=rhs.begin();it!=rhs.end();it++){

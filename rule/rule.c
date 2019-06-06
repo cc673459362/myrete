@@ -23,7 +23,7 @@ std::string rule::getname(){
 }
 
 //set the name of rule
-bool rule::setname(const std::string name){
+bool rule::setname(const std::string& name){
 	_name=name;
 	return true;
 }
@@ -34,7 +34,7 @@ std::list<boost::shared_ptr<condition> > rule::getconditions(){
 }
 
 //set conditions of rule
-bool setconditions(const std::list<boost::shared_ptr<condition> > &conds){
+bool rule::setconditions(const std::list<boost::shared_ptr<condition> > &conds){
 	_condition=conds;
 	return true;
 }
@@ -42,4 +42,10 @@ bool setconditions(const std::list<boost::shared_ptr<condition> > &conds){
 //get the rhs of rule
 std::string rule::getrhs(){
 	return _rhs;
+}
+
+//set the rhs of rule
+bool rule::setrhs(const std::string &rhs){
+	_rhs=rhs;
+	return true;
 }

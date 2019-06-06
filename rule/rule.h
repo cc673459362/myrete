@@ -7,9 +7,11 @@ author:xcc
 
 #ifndef RULE
 #define RULE
+#include<list>
+#include<string>
 #include "condition.h"
-#include<#include<boost/smart_ptr.hpp>
-#include<boost/make_shared.hpp>>
+#include<boost/smart_ptr.hpp>
+#include<boost/make_shared.hpp>
 class rule{
 public:
 	//construction

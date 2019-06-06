@@ -6,8 +6,8 @@ author:xcc
 */
 
 #include "terminalnode.h"
-#include "addproduction.h"
-std::vector<std::pair<std::string,std::string> > rhs=createrhs();
+
+extern std::list<boost::shared_ptr<rule> > rules;
 //construction
 terminalnode::terminalnode(const std::list<boost::shared_ptr<token> > &lefttoken,const std::string &num):_lefttoken(lefttoken),_num(num){
 	
@@ -48,15 +48,12 @@ bool terminalnode::addtoken(const boost::shared_ptr<token> &t,const boost::share
 	boost::shared_ptr<token> newt=boost::make_shared<token>(num,t,w);
 	this->_lefttoken.push_back(newt);
 	std::cout<<"there is terminalnode addtoken!"<<std::endl;
-	std::cout<<"rhs.size : "<<rhs.size()<<std::endl;
-	std::cout<<"rhs.second : "<<rhs.begin()->second<<std::endl;
 	std::cout<<"terminal's num : "<<this->_num<<std::endl;
-	std::cout<<"rhs.first : "<<rhs.begin()->first<<std::endl;
 	//request to agenda using num
-	for(std::vector<std::pair<std::string,std::string> >::iterator it=rhs.begin();it!=rhs.end();it++){
-		if(it->second==_num){
+	for(std::list<boost::shared_ptr<rule> >::iterator it=rules.begin();it!=rules.end();it++){
+		if((*it)->getname()==_num){
 			std::cout<<"!!!!!!!!!!!!!!!!!!!!!!!! TERMINAL   OUT!!!!!!!!!!!!!!!!!!!!!!!!!!  "<<std::endl;
-			std::cout<<it->first<<std::endl;
+			std::cout<<(*it)->getrhs()<<std::endl;
 			std::cout<<"!!!!!!!!!!!!!!!!!!!!!!!! TERMINAL   OUT!!!!!!!!!!!!!!!!!!!!!!!!!!  "<<std::endl;
 
 		}
@@ -68,15 +65,12 @@ bool terminalnode::addtoken(const boost::shared_ptr<token> &t,const boost::share
 		newt->setmyWME(w);
 		this->_lefttoken.push_back(newt);
 	std::cout<<"there is terminalnode addtoken!"<<std::endl;
-	std::cout<<"rhs.size : "<<rhs.size()<<std::endl;
-	std::cout<<"rhs.second : "<<rhs.begin()->second<<std::endl;
 	std::cout<<"terminal's num : "<<this->_num<<std::endl;
-	std::cout<<"rhs.first : "<<rhs.begin()->first<<std::endl;
 	//request to agenda using num
-	for(std::vector<std::pair<std::string,std::string> >::iterator it=rhs.begin();it!=rhs.end();it++){
-		if(it->second==_num){
+	for(std::list<boost::shared_ptr<rule> >::iterator it=rules.begin();it!=rules.end();it++){
+		if((*it)->getname()==_num){
 			std::cout<<"!!!!!!!!!!!!!!!!!!!!!!!! TERMINAL   OUT!!!!!!!!!!!!!!!!!!!!!!!!!!  "<<std::endl;
-			std::cout<<it->first<<std::endl;
+			std::cout<<(*it)->getrhs()<<std::endl;
 			std::cout<<"!!!!!!!!!!!!!!!!!!!!!!!! TERMINAL   OUT!!!!!!!!!!!!!!!!!!!!!!!!!!  "<<std::endl;
 
 		}

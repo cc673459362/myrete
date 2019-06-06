@@ -145,7 +145,7 @@ std::string mygetsecond(const std::string &symbol);
 	arg3   ---> alphanode:root
 	return ---> bool
 */
-bool add_production(std::list<boost::shared_ptr<condition> > &lhs,const std::string &num,boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root);
+bool add_production(const boost::shared_ptr<rule> &rule,boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root);
 
 
 /*************************END OF CREATE FULL NET FROM CONDITIONS**********************/

@@ -65,3 +65,6 @@ this way, we can create more than one rule in the rule.txt. and the net can comp
 function createrule need tobe complete.
 terminal node class need tobe modified.
 function add_production may need tobe modified.
+
+06.06 morning
+complete the multi-rule read and create. test multi-rule sucessfully.

@@ -43,7 +43,12 @@ boost::shared_ptr<joinnode> build_or_share_join_node(boost::shared_ptr<betamemor
 	std::list<boost::shared_ptr<joinnode> > child=parent->getchildren();
 	for(std::list<boost::shared_ptr<joinnode> >::iterator it=child.begin();it!=child.end();it++){
 		if((*it)->getam()==am&&(*it)->gettest()==test)	{
-				
+					std::cout<<"-------------------------------------------------"<<std::endl; 
+	std::cout<<"complete share one joinnode : "<<std::endl;
+	std::cout<<"children joinnode size:        "<<std::endl; 
+	std::cout<<am->getchildren().size()<<std::endl; 
+	std::cout<<""<<std::endl; 
+	std::cout<<"-------------------------------------------------"<<std::endl;
 			return *it;
 		}
 	}
@@ -156,6 +161,7 @@ boost::shared_ptr<alphanode> build_or_share_constant_test_node(const boost::shar
 	std::list<boost::shared_ptr<alphanode> > children=parent->getalp();
 	for(std::list<boost::shared_ptr<alphanode> >::iterator it=children.begin();it!=children.end();it++){
 		if((*it)->gettestfield()==field&&(*it)->getminsymbol()==mygetfirst(symbol)&&(*it)->getmaxsymbol()==mygetsecond(symbol)){
+			std::cout<<"share constant test node!!"<<std::endl;
 			return *it;		
 		}
 	}
@@ -182,6 +188,12 @@ boost::shared_ptr<alphamemory> build_or_share_alphamemory(boost::shared_ptr<cond
 	std::string value=c->getvalue();
 	currentnode=build_or_share_constant_test_node(currentnode,"value",value);
 	if ( currentnode->getalphamemory()!=NULL){
+		std::cout<<"-------------------------------------------------"<<std::endl; 
+	std::cout<<"complete share one alphamemory from condition : "<<std::endl;
+	std::cout<<c->getid()<<std::endl; 
+	std::cout<<c->getattr()<<std::endl; 
+	std::cout<<c->getvalue()<<std::endl; 
+	std::cout<<"-------------------------------------------------"<<std::endl; 
 		return currentnode->getalphamemory();
 	}
 	boost::shared_ptr<alphamemory> am=boost::make_shared<alphamemory>();
@@ -282,8 +294,11 @@ std::vector<std::pair<std::string,std::string> > createrhs(){
 /*
 	create rules from rule.txt
 */
-std::list<boost::shared_ptr<rule> > createrules(std::string filename){
+std::list<boost::shared_ptr<rule> > createrules(){
 	std::list<boost::shared_ptr<rule> > result;
+	std::list<boost::shared_ptr<condition> > conds;
+	std::string name;
+	std::string rhs;
 	std::ifstream in;
 	std::string s;
 	int isrhs=0;
@@ -293,8 +308,8 @@ std::list<boost::shared_ptr<rule> > createrules(std::string filename){
 			getline(in,s);
 			if(s[0]=='r'&&s[1]=='u'&&s[2]=='l'&&s[3]=='e'){
 				int n=s.size();
-				std::string sb=s.substr(5,n-5);
-				std::cout<<"****rule name is: ***** "<<sb<<std::endl;
+				name=s.substr(5,n-5);
+				std::cout<<"****rule name is: ***** "<<name<<std::endl;
 			}
 			else if(s == "LHS:"){
 				isrhs=0;
@@ -305,12 +320,40 @@ std::list<boost::shared_ptr<rule> > createrules(std::string filename){
 				std::cout<<"****next is RHS: "<<std::endl;
 			}
 			else if(s!="RHS:"&&s!="LHS:"&&isrhs==0){
+				std::istringstream ss(s);
+				std::string id;
+				std::string attr;
+				std::string value;
+				ss>>id;
+				std::cout<<"LHS ID : "<<id<<" ";
+				ss>>attr;
+				std::cout<<"LHS ATTR : "<<attr<<" ";
+				ss>>value;
+				std::cout<<"LHS VALUE : "<<value<<std::endl;
+				boost::shared_ptr<condition> cond=boost::make_shared<condition>(id,attr,value);
+				conds.push_back(cond);
+			}
+			else if(s!="RHS:"&&s!="LHS:"&&s!="end"&&isrhs==1){
+				rhs=s;
+				std::cout<<rhs<<std::endl;
+			}
+			else if(s=="end"){
+				boost::shared_ptr<rule> re=boost::make_shared<rule>();
+				re->setname(name);
+				re->setconditions(conds);
+				re->setrhs(rhs);
+				result.push_back(re);
+				conds.clear();
 				
 			}
+			else if(s==""){
+				continue;
+			}
+			
 		}	
 	}
 
-
+	return result;
 
 
 }
@@ -383,9 +426,11 @@ std::string mygetsecond(const std::string &symbol){
 
 
 /*******************************CREATE FULL NET FROM CONDITIONS************************/
-bool add_production(std::list<boost::shared_ptr<condition> > &lhs,const std::string &num, boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root){
+bool add_production(const boost::shared_ptr<rule> &rule,/*std::list<boost::shared_ptr<condition> > &lhs,const std::string &num,*/ boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root){
 	boost::shared_ptr<betamemory> currentnode=dummynode;
 	std::list<boost::shared_ptr<condition> > earlierconds;
+	std::list<boost::shared_ptr<condition> > lhs=rule->getconditions();
+	std::string num=rule->getname();
 	std::list<boost::shared_ptr<condition> >::iterator it=lhs.begin();
 	std::list<boost::shared_ptr<testjoinnode> > tests=get_join_tests_from_condition(*it,earlierconds);
 	/** DEBUG COUT***/
@@ -428,7 +473,7 @@ bool add_production(std::list<boost::shared_ptr<condition> > &lhs,const std::str
 		am=build_or_share_alphamemory(*it,root);
 		currentjoinnode=build_or_share_join_node(currentnode,am,tests);
 	}
-	boost::shared_ptr<terminalnode > terminal=boost::make_shared<terminalnode>(num);//num="0" token=NULL
+	boost::shared_ptr<terminalnode > terminal=boost::make_shared<terminalnode>(num);//rule
 	currentjoinnode->setterminal(terminal);
 	std::cout<<currentjoinnode->getterminal()->getnum()<<std::endl;
 	

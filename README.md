@@ -1,6 +1,8 @@
 # myrete-lite
 ---
 # user guide
+pa -a find the main's PID.
+cat /proc/PID/status get the meminfo of main(VmRSS).
 ---
 
 05.09 finish some of betamemory . using shared_ptr to manage the new token.  should using shared_ptr in other file.
@@ -68,3 +70,5 @@ function add_production may need tobe modified.
 
 06.06 morning
 complete the multi-rule read and create. test multi-rule sucessfully.
+
+06.10 add ctime include file to calculate the time.  using excel on Windows to create thousands of rules. so the function read rule file need tobe changed!

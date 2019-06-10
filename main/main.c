@@ -8,11 +8,15 @@ author:xcc
 #include<iostream>
 #include<list>
 #include<vector>
+#include<ctime>
+clock_t readrule_start=clock();
 std::list<boost::shared_ptr<rule> > rules=createrules();
 int main(){
 	//create rules
-	
+	clock_t readrule_end=clock();
+	std::cout<<"read rules from file and create list of rule spend :"<<readrule_end-readrule_start<<"(ns) "<<std::endl;
 	std::cout<<"rules size : "<<rules.size()<<std::endl;
+	clock_t compile_start=clock();
 	//create dummynode
 	boost::shared_ptr<betamemory> dummynode=boost::make_shared<betamemory>();
 	//create root node
@@ -25,8 +29,9 @@ int main(){
 		add_production(*it,dummynode,root);
 		std::cout<<"#############complete compiler "<<(*it)->getname()<<" net! ##################"<<std::endl;
 	}
-	
+	clock_t compile_end=clock();
 	std::cout<<"complete compiler the net!"<<std::endl;
+	std::cout<<"compile the net spend: "<<compile_end-compile_start<<"(ns) "<<std::endl;
 	boost::shared_ptr<workingmemory> wm=boost::make_shared<workingmemory>(root);
 	/************* insert into wm*****************
 	boost::shared_ptr<myWME> t=boost::make_shared<myWME>("temprature","=","32");

@@ -143,11 +143,11 @@ bool joinnode::settest(const std::list<boost::shared_ptr<testjoinnode> > &test){
 	the arg3 w    means the alpha memory's new WME which active the right activation
 */
 bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,const boost::shared_ptr<token> &t,const boost::shared_ptr<myWME> &w){
-	if(t==NULL)	std::cout<<"t is NULL "<<std::endl;
+	if(t==NULL)	std::cout<<"token is NULL "<<std::endl;
 	std::list<boost::shared_ptr<testjoinnode> >::iterator it=test.begin();
 	std::cout<<"test list size: "<<test.size()<<std::endl;
 	for(it;it!=test.end();it++){
-		std::cout<<"into testjoin    "<<std::endl;
+		std::cout<<"<---into testjoin--->    "<<std::endl;
 		std::string arg1=(*it)->getarg1();
 		if(arg1=="identifier"){
 			arg1=w->getid();
@@ -158,12 +158,30 @@ bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,const boo
 		else if(arg1=="value"){
 			arg1=w->getvalue();
 		}//arg1
+#ifdef ORIGIN
+		else if(arg1=="arg4"){
+			arg1=w->getarg4();
+		}
+		else if(arg1=="arg5"){
+			arg1=w->getarg5();
+		}
+		else if(arg1=="arg6"){
+			arg1=w->getarg6();
+		}
+		else if(arg1=="arg7"){
+			arg1=w->getarg7();
+		}
+		else if(arg1=="arg8"){
+			arg1=w->getarg8();
+		}
+		
+#endif
 		int n=(*it)->getnumberofarg2();
 		boost::shared_ptr<myWME> w2;
 		//w2.reset();// set the w2==NULL;
 		
 		if(t==NULL){	
-			std::cout<<"perform false!!!!!!!!"<<std::endl;
+			std::cout<<"token is empty perform false!!!!!!!!"<<std::endl;
 			return false;
 		}
 		boost::shared_ptr<token> tt=t;
@@ -187,6 +205,23 @@ bool performjoinnode(std::list<boost::shared_ptr<testjoinnode> > &test,const boo
 			else if(arg2=="value"){
 				arg2=w2->getvalue();
 			}//arg2
+#ifdef ORIGIN
+			else if(arg2=="arg4"){
+				arg2=w2->getarg4();
+			}
+			else if(arg2=="arg5"){
+				arg2=w2->getarg5();
+			}
+			else if(arg2=="arg6"){
+				arg2=w2->getarg6();
+			}
+			else if(arg2=="arg7"){
+				arg2=w2->getarg7();
+			}
+			else if(arg2=="arg8"){
+				arg2=w2->getarg8();
+			}			
+#endif
 		}
 		if(arg1!=arg2)  {
 			return false;
@@ -212,13 +247,13 @@ bool joinnode::join_node_right_activation(boost::shared_ptr<myWME> &w){
 	for(std::list<boost::shared_ptr<token> >::iterator it=partoken.begin();it!=partoken.end();it++){
 		if(performjoinnode(this->_test,*it,w)){   //setp 1
 			if(this->getterminal()!=NULL){//if has terminal node
-				this->getterminal()->addtoken(*it,w);
 				std::cout<<"right insert into terminalnode :"<<this->getterminal()->getnum()<<std::endl;
+				this->getterminal()->addtoken(*it,w);
 			}
 			for(std::list<boost::shared_ptr<betamemory> >::iterator it2=_children.begin();it2!=_children.end();it2++ ){
-							  	std::cout<<"-------------------------------------"<<std::endl;
-	std::cout<<"joinnode right activation betamemory left       "<<std::endl;
-	std::cout<<"-------------------------------------"<<std::endl;
+				std::cout<<"-------------------------------------"<<std::endl;
+				std::cout<<"joinnode right activation betamemory left       "<<std::endl;
+				std::cout<<"-------------------------------------"<<std::endl;
 				(*it2)->beta_memory_left_activation(*it,w); //step 2
 			}		
 		}
@@ -227,22 +262,22 @@ bool joinnode::join_node_right_activation(boost::shared_ptr<myWME> &w){
 		}
 	}
 	}
-	else{	std::cout<<"-------------------------------------"<<std::endl;
-	std::cout<<"jonnode's parent token is empty       "<<std::endl;
-	std::cout<<"-------------------------------------"<<std::endl;
+	else{	
+		std::cout<<"-------------------------------------"<<std::endl;
+		std::cout<<"jonnode's parent token is empty       "<<std::endl;
+		std::cout<<"-------------------------------------"<<std::endl;
 		std::list<boost::shared_ptr<token> >::iterator it=partoken.begin();
-		if(*it==NULL)std::cout<<"  it is NULL  "<<std::endl;
+		if(*it==NULL)std::cout<<"it is NULL  "<<std::endl;
 		if(performjoinnode(this->_test,*it,w)){   //setp 1
-		
 			if(this->getterminal()!=NULL){//if has terminal node
 				//std::cout<<"thathathathahthathahtaht"<<std::endl;
-				this->getterminal()->addtoken(*it,w);
 				std::cout<<"right insert into terminalnode :"<<this->getterminal()->getnum()<<std::endl;
+				this->getterminal()->addtoken(*it,w);
 			}
 			for(std::list<boost::shared_ptr<betamemory> >::iterator it2=_children.begin();it2!=_children.end();it2++ ){
-							  	std::cout<<"-------------------------------------"<<std::endl;
-	std::cout<<"joinnode right activation betamemory left  (0)     "<<std::endl;
-	std::cout<<"-------------------------------------"<<std::endl;
+				std::cout<<"-------------------------------------"<<std::endl;
+				std::cout<<"joinnode right activation betamemory left  (0)     "<<std::endl;
+				std::cout<<"-------------------------------------"<<std::endl;
 				(*it2)->beta_memory_left_activation(*it,w); //step 2
 			}		
 		}
@@ -260,19 +295,18 @@ bool joinnode::join_node_left_activation(boost::shared_ptr<token> &t){
 	for(std::list<boost::shared_ptr<myWME> > ::iterator it=wmes.begin();it!=wmes.end();it++){
 		if(performjoinnode(this->_test,t,*it)){
 			if(this->getterminal()!=NULL){//if has terminal node
-				this->getterminal()->addtoken(t,*it);
 				std::cout<<"left insert into terminalnode :"<<this->getterminal()->getnum()<<std::endl;
+				this->getterminal()->addtoken(t,*it);
 			}
 			for(std::list<boost::shared_ptr<betamemory> >::iterator it2=_children.begin();it2!=_children.end();it2++ ){
-			std::cout<<"-------------------------------------"<<std::endl;
-	std::cout<<"joinnode left activation betamemory left       "<<std::endl;
-	std::cout<<"-------------------------------------"<<std::endl;
+				std::cout<<"-------------------------------------"<<std::endl;
+				std::cout<<"joinnode left activation betamemory left       "<<std::endl;
+				std::cout<<"-------------------------------------"<<std::endl;
 				(*it2)->beta_memory_left_activation(t,*it); //step 2
 			}
 		}
 	}
-	return true;
-	
+	return true;	
 }
 
 

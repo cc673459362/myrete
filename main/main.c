@@ -21,9 +21,11 @@ int main(){
 	boost::shared_ptr<betamemory> dummynode=boost::make_shared<betamemory>();
 	//create root node
 	boost::shared_ptr<alphanode> root=boost::make_shared<alphanode>();
+	#ifdef DEBUG
 	if(root->getalphamemory()==NULL){
 		std::cout<<"root's am is null"<<std::endl;
 	}
+	#endif
 	root->settestfield("NO-TEST");
 	for(std::list<boost::shared_ptr<rule> >::iterator it=rules.begin();it!=rules.end();it++){
 		add_production(*it,dummynode,root);
@@ -44,10 +46,11 @@ int main(){
 	********************************************/
 	std::ifstream in;
 	in.open("../data/data",std::ios::in);
-	while(1){
-		
-		getdataintowm(wm,in);
+	int timesum=0;
+	while(!in.eof()){
+		getdataintowm(wm,in,timesum);
 	}
+	std::cout<<"time is: "<<timesum<<std::endl;
 	in.close();
 		
 }

@@ -84,18 +84,17 @@ void alphanode::alphanodeactivation(boost::shared_ptr<myWME>& w){
 			std::string v=w->getid();
 			if(v!=this->_minsymbol){
 				std::cout<<"identifier match failed"<<std::endl;
-				std::cout<<"wme's id = "<<v<<std::endl;
-				std::cout<<"symbol   = "<<_minsymbol<<std::endl;
+				std::cout<<"wme's id         = "<<v<<std::endl;
+				std::cout<<"alphanode's id   = "<<_minsymbol<<std::endl;
 				return ;
 			}
-		}
-				
+		}	
 		else if(this->_testfield=="attribute"){
 			std::string v=w->getattr();
 			if(v!=this->_minsymbol){
 				std::cout<<"attribute match failed"<<std::endl;		
-				std::cout<<"wme's attr = "<<v<<std::endl;
-				std::cout<<"symbol     = "<<_minsymbol<<std::endl;		
+				std::cout<<"wme's attr       = "<<v<<std::endl;
+				std::cout<<"alphanode's attr = "<<_minsymbol<<std::endl;		
 				return ;
 			}      //because except "value" the other two field must be some real string(not int),so the condition must be "=",so the _minsymbol must be equal to the _maxsymbol since [_minsymbol,_maxsymbol)
 		}
@@ -112,13 +111,58 @@ void alphanode::alphanodeactivation(boost::shared_ptr<myWME>& w){
 			ss2>>maxn;
 			if(nv<minn||nv>maxn){
 				std::cout<<"value match failed"<<std::endl;
-				std::cout<<"wme's value = "<<v<<std::endl;
-				std::cout<<"symbol      = "<<_minsymbol<<std::endl;
+				std::cout<<"wme's value       = "<<v<<std::endl;
+				std::cout<<"alphanode's value = "<<_minsymbol<<std::endl;
 				return ;
 			}
 		}
-				
-		
+#ifdef ORIGIN
+		if(this->_testfield=="arg4"){		
+			std::string v=w->getarg4();
+			if(v!=this->_minsymbol){
+				std::cout<<"arg4 match failed"<<std::endl;
+				std::cout<<"wme's arg4         = "<<v<<std::endl;
+				std::cout<<"alphanode's arg4   = "<<_minsymbol<<std::endl;
+				return ;
+			}
+		}
+		if(this->_testfield=="arg5"){		
+			std::string v=w->getarg5();
+			if(v!=this->_minsymbol){
+				std::cout<<"arg5 match failed"<<std::endl;
+				std::cout<<"wme's arg5         = "<<v<<std::endl;
+				std::cout<<"alphanode's arg5   = "<<_minsymbol<<std::endl;
+				return ;
+			}
+		}
+		if(this->_testfield=="arg6"){		
+			std::string v=w->getarg6();
+			if(v!=this->_minsymbol){
+				std::cout<<"arg6 match failed"<<std::endl;
+				std::cout<<"wme's arg6         = "<<v<<std::endl;
+				std::cout<<"alphanode's arg6   = "<<_minsymbol<<std::endl;
+				return ;
+			}
+		}
+		if(this->_testfield=="arg7"){		
+			std::string v=w->getarg7();
+			if(v!=this->_minsymbol){
+				std::cout<<"arg7 match failed"<<std::endl;
+				std::cout<<"wme's arg7         = "<<v<<std::endl;
+				std::cout<<"alphanode's arg7   = "<<_minsymbol<<std::endl;
+				return ;
+			}
+		}
+		if(this->_testfield=="arg8"){		
+			std::string v=w->getarg8();
+			if(v!=this->_minsymbol){
+				std::cout<<"arg4 match failed"<<std::endl;
+				std::cout<<"wme's arg8         = "<<v<<std::endl;
+				std::cout<<"alphanode's arg8   = "<<_minsymbol<<std::endl;
+				return ;
+			}
+		}
+#endif			
 	}
 	if(this->_am!=NULL){ //the next node is alpha memory
 		(this->_am)->addmyWME(w);

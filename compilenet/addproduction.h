@@ -7,6 +7,7 @@ author:xcc
 
 #ifndef ADDPRODUCTION
 #define ADDPRODUCTION
+#include<ctime>
 #include<list>
 #include<iostream>
 #include<fstream>
@@ -115,7 +116,7 @@ std::list<boost::shared_ptr<rule> > createrules();
 	get data from data/data and form data to WME and insert it to wm.
 	return ---> vector:rhs
 **/
-void getdataintowm(boost::shared_ptr<workingmemory> &wm,std::ifstream &in);
+void getdataintowm(boost::shared_ptr<workingmemory> &wm,std::ifstream &in,int &timesum);
 
 /*
 	get first half symbol from "minsymbol,maxsymbol"

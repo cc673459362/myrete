@@ -1,6 +1,7 @@
 CC=g++
 ROOT_DIR= ~/Downloads/drools/myrete
 DEBUG ?=0
+ORIGIN ?=0
 INCLUDE += -I $(ROOT_DIR)/alphamemory/
 INCLUDE += -I $(ROOT_DIR)/alphanode/
 INCLUDE += -I $(ROOT_DIR)/betamemory/
@@ -35,6 +36,9 @@ SRC += $(ROOT_DIR)/workingmemory/workingmemory.c
 CFLAGS =
 ifeq ($(DEBUG),1)
 	CFLAGS+= -g -O0
+endif
+ifeq ($(ORIGIN),1)
+	CFLAGS+= -DORIGIN
 endif
 OBJ = $(patsubst %.c,%.o,$(SRC))
 TARGET := main

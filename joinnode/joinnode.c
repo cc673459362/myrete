@@ -291,6 +291,16 @@ bool joinnode::join_node_right_activation(boost::shared_ptr<myWME> &w){
 //the joinnode was left activation by it's parent->left_betamemroy_activation
 bool joinnode::join_node_left_activation(boost::shared_ptr<token> &t){
 	boost::shared_ptr<alphamemory> am=this->getam();
+#ifdef BTREE
+	std::list<boost::shared_ptr<joinnode> > joinlist=am->getchildren();
+	int count=1;
+	for(std::list<boost::shared_ptr<joinnode> >::iterator it=joinlist.begin();it!=joinlist.end();it++){
+		if((*it)->getparent()==_parent&&(*it)->getchildren()==_children&&(*it)->getterminal()==_terminal&&(*it)->getam()==_am&&(*it)->gettest()==_test){//find the joinnode number in the parent am
+			am->setnotempty(count);
+		}
+		count++;
+	}
+#endif
 	std::list<boost::shared_ptr<myWME> > wmes=am->getam();
 	for(std::list<boost::shared_ptr<myWME> > ::iterator it=wmes.begin();it!=wmes.end();it++){
 		if(performjoinnode(this->_test,t,*it)){

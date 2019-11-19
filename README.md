@@ -74,3 +74,6 @@ complete the multi-rule read and create. test multi-rule sucessfully.
 06.10 add ctime include file to calculate the time.  using excel on Windows to create thousands of rules. so the function read rule file need tobe changed!
 
 6.13 night  complete the function read rule and add timesum to count the all WME throw the net's time.
+
+11.19
+have add btree optimize . But it need some test data to confirm.

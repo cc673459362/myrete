@@ -27,10 +27,16 @@ int main(){
 	}
 	#endif
 	root->settestfield("NO-TEST");
+	std::vector<boost::shared_ptr<alphamemory> > indexvector;
 	for(std::list<boost::shared_ptr<rule> >::iterator it=rules.begin();it!=rules.end();it++){
-		add_production(*it,dummynode,root);
+		add_production(*it,dummynode,root,indexvector);
 		std::cout<<"#############complete compiler "<<(*it)->getname()<<" net! ##################"<<std::endl;
 	}
+#ifdef BTREE
+	for(std::vector<boost::shared_ptr<alphamemory> >::iterator it=indexvector.begin();it!=indexvector.end();it++){
+		(*it)->createbtree(5);  //degree=5
+	}
+#endif
 	clock_t compile_end=clock();
 	std::cout<<"complete compiler the net!"<<std::endl;
 	std::cout<<"compile the net spend: "<<compile_end-compile_start<<"(ns) "<<std::endl;

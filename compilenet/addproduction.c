@@ -43,12 +43,12 @@ boost::shared_ptr<joinnode> build_or_share_join_node(boost::shared_ptr<betamemor
 	std::list<boost::shared_ptr<joinnode> > child=parent->getchildren();
 	for(std::list<boost::shared_ptr<joinnode> >::iterator it=child.begin();it!=child.end();it++){
 		if((*it)->getam()==am&&(*it)->gettest()==test)	{
-					std::cout<<"-------------------------------------------------"<<std::endl; 
-	std::cout<<"complete share one joinnode : "<<std::endl;
-	std::cout<<"children joinnode size:        "<<std::endl; 
-	std::cout<<am->getchildren().size()<<std::endl; 
-	std::cout<<""<<std::endl; 
-	std::cout<<"-------------------------------------------------"<<std::endl;
+			std::cout<<"-------------------------------------------------"<<std::endl; 
+			std::cout<<"complete share one joinnode : "<<std::endl;
+			std::cout<<"children joinnode size:        "<<std::endl; 
+			std::cout<<am->getchildren().size()<<std::endl; 
+			std::cout<<""<<std::endl; 
+			std::cout<<"-------------------------------------------------"<<std::endl;
 			return *it;
 		}
 	}
@@ -843,7 +843,7 @@ std::string mygetsecond(const std::string &symbol){
 
 
 /*******************************CREATE FULL NET FROM CONDITIONS************************/
-bool add_production(const boost::shared_ptr<rule> &rule,/*std::list<boost::shared_ptr<condition> > &lhs,const std::string &num,*/ boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root){
+bool add_production(const boost::shared_ptr<rule> &rule,/*std::list<boost::shared_ptr<condition> > &lhs,const std::string &num,*/ boost::shared_ptr<betamemory> &dummynode,boost::shared_ptr<alphanode> &root,std::vector<boost::shared_ptr<alphamemory> > &indexvector){
 	boost::shared_ptr<betamemory> currentnode=dummynode;
 	std::list<boost::shared_ptr<condition> > earlierconds;
 	std::list<boost::shared_ptr<condition> > lhs=rule->getconditions();
@@ -853,17 +853,18 @@ bool add_production(const boost::shared_ptr<rule> &rule,/*std::list<boost::share
 	/** DEBUG COUT***/
 	int count =1;
 	if(tests.size()!=0){
-	for(std::list<boost::shared_ptr<testjoinnode> >::iterator it1=tests.begin();it1!=tests.end();it1++){
-		std::cout<<"test "<<count<<" arg1: "<<(*it1)->getarg1()<<std::endl;
-		std::cout<<"test "<<count<<" arg2: "<<(*it1)->getarg2()<<std::endl;
-		std::cout<<"test "<<count<<" number of arg2: "<<(*it1)->getnumberofarg2()<<std::endl;
-	}
+		for(std::list<boost::shared_ptr<testjoinnode> >::iterator it1=tests.begin();it1!=tests.end();it1++){
+			std::cout<<"test "<<count<<" arg1: "<<(*it1)->getarg1()<<std::endl;
+			std::cout<<"test "<<count<<" arg2: "<<(*it1)->getarg2()<<std::endl;
+			std::cout<<"test "<<count<<" number of arg2: "<<(*it1)->getnumberofarg2()<<std::endl;
+		}
 	}else{
-		std::cout<<"test "<<count<<"is null"<<std::endl;
+		std::cout<<"test "<<count<<" is null"<<std::endl;
 	}
 	count++;
 	/** DEBUG COUT***/
 	boost::shared_ptr<alphamemory> am=build_or_share_alphamemory(*it,root);
+	indexvector.push_back(am); //collect the am
 	boost::shared_ptr<joinnode> currentjoinnode=build_or_share_join_node(currentnode,am,tests);
 	it++;
 	for(it;it!=lhs.end();it++){
@@ -876,25 +877,24 @@ bool add_production(const boost::shared_ptr<rule> &rule,/*std::list<boost::share
 		tests=get_join_tests_from_condition(*it,earlierconds);
 		/** DEBUG COUT***/
 	
-	if(tests.size()!=0){
-	for(std::list<boost::shared_ptr<testjoinnode> >::iterator it1=tests.begin();it1!=tests.end();it1++){
-		std::cout<<"test "<<count<<" arg1: "<<(*it1)->getarg1()<<std::endl;
-		std::cout<<"test "<<count<<" arg2: "<<(*it1)->getarg2()<<std::endl;
-		std::cout<<"test "<<count<<" number of arg2: "<<(*it1)->getnumberofarg2()<<std::endl;
-	}
-	}else{
-		std::cout<<"test "<<count<<"is null"<<std::endl;
-	}
-	count++;
-	/** DEBUG COUT***/
+		if(tests.size()!=0){
+			for(std::list<boost::shared_ptr<testjoinnode> >::iterator it1=tests.begin();it1!=tests.end();it1++){
+				std::cout<<"test "<<count<<" arg1: "<<(*it1)->getarg1()<<std::endl;
+				std::cout<<"test "<<count<<" arg2: "<<(*it1)->getarg2()<<std::endl;
+				std::cout<<"test "<<count<<" number of arg2: "<<(*it1)->getnumberofarg2()<<std::endl;
+			}
+		}else{
+			std::cout<<"test "<<count<<"is null"<<std::endl;
+		}
+		count++;
+		/** DEBUG COUT***/
 		am=build_or_share_alphamemory(*it,root);
+		indexvector.push_back(am);  //collect the am
 		currentjoinnode=build_or_share_join_node(currentnode,am,tests);
 	}
 	boost::shared_ptr<terminalnode > terminal=boost::make_shared<terminalnode>(num);//rule
 	currentjoinnode->setterminal(terminal);
 	std::cout<<currentjoinnode->getterminal()->getnum()<<std::endl;
-	
-
 	
 }
 

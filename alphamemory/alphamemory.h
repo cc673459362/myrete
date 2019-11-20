@@ -32,8 +32,8 @@ public:
 	void setfrontseq(const int&);
 	int getbackseq();
 	void setbackseq(const int &);
-	std::vector<boost::shared_ptr<btree> > getchildren();
-	std::vector<boost::shared_ptr<joinnode> > getleafnode();
+	std::vector<boost::shared_ptr<btree> >& getchildren();
+	std::vector<boost::shared_ptr<joinnode> >& getleafnode();
 	void setleafnode(std::vector<boost::shared_ptr<joinnode> >&);
 	void setchildren(std::vector<boost::shared_ptr<btree> >&);
 	//void btsetnotempty(const int &);

@@ -56,19 +56,19 @@ void btree::setbackseq(const int &backseq){
 	_backseq=backseq;
 }
 
-std::vector<boost::shared_ptr<btree> > btree::getchildren(){
+std::vector<boost::shared_ptr<btree> >& btree::getchildren(){
 	return _children;
 }
 
-std::vector<boost::shared_ptr<joinnode> > btree::getleafnode(){
+std::vector<boost::shared_ptr<joinnode> >& btree::getleafnode(){
 	return _leafnode;
 }
 
-void btree::setleafnode(std::vector<boost::shared_ptr<joinnode> >& leafnode){
+void btree::setleafnode(std::vector<boost::shared_ptr<joinnode> > &leafnode){
 	_leafnode=leafnode;
 }
 
-void btree::setchildren(std::vector<boost::shared_ptr<btree> >& children){
+void btree::setchildren(std::vector<boost::shared_ptr<btree> > &children){
 	_children=children;
 }
 
@@ -97,6 +97,7 @@ void alphamemory::createbtree(const int &degree){
 	}
 	int m=degree;
 	int n=_childrennode.size();
+	std::cout<<"the am has "<<n<<" childrennode!"<<std::endl;
 	_broot=boost::make_shared<btree>(1,n,m);
 	
 	createchildnode(_broot,1,n,m);
@@ -107,7 +108,12 @@ void alphamemory::createbtree(const int &degree){
 void alphamemory::createchildnode(boost::shared_ptr<btree> &root,const int &frontseq,const int &backseq,const int& degree){
 	if(backseq-frontseq+1<=degree){//leaf node
 		boost::shared_ptr<btree> re=boost::make_shared<btree>(frontseq,backseq,degree);
+
 		re->setleaf(true);
+#ifdef DEBUG
+		std::cout<<" set the btree node is leaf node:"<<backseq<<" "<<frontseq<<std::endl;
+		std::cout<<re->getleaf()<<std::endl;
+#endif
 		int count=1;
 		std::vector<boost::shared_ptr<joinnode> > leafnode;
 		for(std::list<boost::shared_ptr<joinnode> >::iterator it=_childrennode.begin();it!=_childrennode.end();it++){
@@ -120,6 +126,7 @@ void alphamemory::createchildnode(boost::shared_ptr<btree> &root,const int &fron
 		std::vector<boost::shared_ptr<btree> > child=root->getchildren();
 		child.push_back(re);
 		root->setchildren(child);
+		return;
 	}
 	else{//not leaf node
 		int n=backseq-frontseq+1;
@@ -127,6 +134,7 @@ void alphamemory::createchildnode(boost::shared_ptr<btree> &root,const int &fron
 		n=n/degree;
 		for(int i=0;i<degree;i++){
 			boost::shared_ptr<btree> re=boost::make_shared<btree>(frontseq+i*n,std::min(frontseq+i*n+n-1,backseq),degree);
+			std::cout<<"make the btree node front: "<<frontseq+i*n<<" back: "<<std::min(frontseq+i*n+n-1,backseq)<<std::endl;
 			children.push_back(re);
 		}
 		root->setchildren(children);
@@ -172,26 +180,66 @@ void alphamemory::addmyWME(boost::shared_ptr<myWME> &w){
 	}
 #endif
 #ifdef BTREE
+#ifdef DEBUG
+	std::cout<<"--am get into btree activation--"<<std::endl;
+#endif
 	boost::shared_ptr<btree> broot=this->_broot;
-	curempty(broot,w);
+
+	std::cout<<broot->getbackseq()<<" "<<broot->getfrontseq()<<std::endl;
+	std::cout<<"broot is leaf?" <<broot->getleaf()<<std::endl;
+	std::cout<<"broot's children size: "<<broot->getchildren().size()<<std::endl;
+	std::cout<<broot->getchildren()[0]->getleaf()<<" "<<std::endl;
+	std::cout<<broot->getchildren()[0]->getfrontseq()<<" "<<std::endl;
+	std::cout<<broot->getchildren()[0]->getbackseq()<<" "<<std::endl;
+	std::cout<<broot->getchildren()[0]->getempty()<<" "<<std::endl;
+
+	curempty(_broot,w);
 #endif
 
 }
 #ifdef BTREE
 void curempty(boost::shared_ptr<btree> &root,boost::shared_ptr<myWME> &w){	
+#ifdef DEBUG
+	if(root==NULL){
+		std::cout<<"curempty--> root==NULL"<<std::endl;
+	}
+#endif
+
 	if(root->getleaf()){//if the node is leaf node
+	std::cout<<"error test11111113333"<<std::endl;
 		for(std::vector<boost::shared_ptr<joinnode> > ::iterator it=root->getleafnode().begin();it!=root->getleafnode().end();it++){
 			(*it)->join_node_right_activation(w);
 		}
 		return;
-	}	
+	}
+	
 	if(!(root->getleaf())){//if the btree node is not a leaf node
-		for(std::vector<boost::shared_ptr<btree> >::iterator it=root->getchildren().begin();it!=root->getchildren().end();it++){
-			if((*it)->getempty()){
+std::cout<<"error test1111111111111"<<std::endl;
+		std::cout<<root->getleaf()<<std::endl;
+		std::cout<<root->getleafnode().size()<<std::endl;
+		
+		std::cout<<root->getchildren().size()<<std::endl;
+//root->getchildren();
+std::cout<<"error test11111111222"<<std::endl;
+		for(std::vector<boost::shared_ptr<btree> >::iterator it2=(root->getchildren()).begin();it2!=(root->getchildren()).end();it2++){
+std::cout<<"error test11111111222"<<std::endl;
+std::cout<<root->getchildren()[0]->getbackseq()<<" "<<std::endl;
+if(*it2==NULL){
+		std::cout<<"curempty--> it==NULL"<<std::endl;
+	}
+std::cout<<(*it2)->getfrontseq()<<std::endl;
+std::cout<<(*it2)->getbackseq()<<std::endl;
+std::cout<<(*it2)->getempty()<<std::endl;
+std::cout<<"error test32"<<std::endl;
+			if((*it2)->getempty()){
+std::cout<<"error test11324352"<<std::endl;
 				return;
-			}else{
-				curempty(*it,w);
 			}
+			else{
+std::cout<<"error test111111114352"<<std::endl;
+				curempty(*it2,w);
+			}
+
 		}
 	}
 	return;

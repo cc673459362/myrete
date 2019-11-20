@@ -36,7 +36,7 @@ SRC += $(ROOT_DIR)/workingmemory/workingmemory.c
 
 CFLAGS =
 ifeq ($(DEBUG),1)
-	CFLAGS+= -g -O0
+	CFLAGS+= -g -O0 -DDEBUG
 endif
 ifeq ($(ORIGIN),1)
 	CFLAGS+= -DORIGIN

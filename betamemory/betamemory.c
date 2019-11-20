@@ -63,7 +63,36 @@ bool betamemory::settoken(const std::list<boost::shared_ptr<token> > item){
 						  2. left-activation the children node(join-node) 
 */
 bool betamemory::beta_memory_left_activation(const boost::shared_ptr<token> &t,const boost::shared_ptr<myWME> &w){
-	if(t!=NULL){	
+#ifdef BTREE
+if(t->getfront()==NULL && w->getid()=="1" && w->getattr()=="2" && w->getvalue()=="3" && w->getarg4()=="4" && w->getarg5()=="5" && w->getarg6()=="6" && w->getarg7()=="7" && w->getarg8()=="8"){
+		int num=1;	
+		std::cout<<"combine a new token from joinnode's token and wme(1)"<<std::endl;
+		boost::shared_ptr<token> newt=boost::make_shared<token>();
+		newt->setmyWME(w);
+		this->_item.push_back(newt);   //
+		std::cout<<"push a new token into item(1) "<<std::endl;  
+		std::list<boost::shared_ptr<joinnode> > chi=this->getchildren();
+		for(std::list<boost::shared_ptr<joinnode> >::iterator it=chi.begin();it!=chi.end();it++){
+			(*it)->join_node_left_activation(newt);
+		}
+		return true;
+	}
+if(t->getfront()==NULL && t->getmyWME()->getid()=="1" && t->getmyWME()->getattr()=="2" &&t->getmyWME()->getvalue()=="3" && t->getmyWME()->getarg4()=="4" && t->getmyWME()->getarg5()=="5" && t->getmyWME()->getarg6()=="6" && t->getmyWME()->getarg7()=="7" && t->getmyWME()->getarg8()=="8"){
+		int num=1;	
+		std::cout<<"combine a new token from joinnode's token and wme(2)"<<std::endl;
+		boost::shared_ptr<token> newt=boost::make_shared<token>();
+		newt->setmyWME(w);
+		this->_item.push_back(newt);   //
+		std::cout<<"push a new token into item(2) "<<std::endl;  
+		std::list<boost::shared_ptr<joinnode> > chi=this->getchildren();
+		for(std::list<boost::shared_ptr<joinnode> >::iterator it=chi.begin();it!=chi.end();it++){
+			(*it)->join_node_left_activation(newt);
+		}
+		return true;
+	} 
+#endif
+	if(t!=NULL){
+		
 	int num=t->getnum();
 	num+=1;	
 	std::cout<<"combine a new token from joinnode's token and wme"<<std::endl;
@@ -74,7 +103,9 @@ bool betamemory::beta_memory_left_activation(const boost::shared_ptr<token> &t,c
 	for(std::list<boost::shared_ptr<joinnode> >::iterator it=chi.begin();it!=chi.end();it++){
 		(*it)->join_node_left_activation(newt);
 	}
+	
 	}else{
+		
 		int num=1;	
 		std::cout<<"combine a new token from joinnode's token and wme(0)"<<std::endl;
 		boost::shared_ptr<token> newt=boost::make_shared<token>();

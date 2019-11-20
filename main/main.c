@@ -50,6 +50,17 @@ int main(){
 	wm.addmyWME(w);
 	wm.addmyWME(r);
 	********************************************/
+#ifdef BTREE
+	//put some token into dummynode
+	boost::shared_ptr<token> t=boost::make_shared<token>();
+#ifdef ORIGIN
+	boost::shared_ptr<myWME> w=boost::make_shared<myWME>("1","2","3","4","5","6","7","8");
+#endif
+#ifndef ORIGIN
+	boost::shared_ptr<myWME> w=boost::make_shared<myWME>("1","2","3");
+#endif
+	dummynode->beta_memory_left_activation(t,w);
+#endif
 	std::ifstream in;
 	in.open("../data/data",std::ios::in);
 	int timesum=0;

@@ -297,6 +297,9 @@ bool joinnode::join_node_left_activation(boost::shared_ptr<token> &t){
 	for(std::list<boost::shared_ptr<joinnode> >::iterator it=joinlist.begin();it!=joinlist.end();it++){
 		if((*it)->getparent()==_parent&&(*it)->getchildren()==_children&&(*it)->getterminal()==_terminal&&(*it)->getam()==_am&&(*it)->gettest()==_test){//find the joinnode number in the parent am
 			am->setnotempty(count);
+#if DEBUG
+			std::cout<<"set the number of joinnode not empty in btree: "<<count<<std::endl;
+#endif 
 		}
 		count++;
 	}

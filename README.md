@@ -76,4 +76,100 @@ complete the multi-rule read and create. test multi-rule sucessfully.
 6.13 night  complete the function read rule and add timesum to count the all WME throw the net's time.
 
 11.19
-have add btree optimize . But it need some test data to confirm.
+have add btree optimize . But it need some test data to confirm.  
+
+11.21
+test the btree finished. the test rule.text:  
+rule: 1
+LHS:
+11 22 33 44 55 66 77 88
+12 23 34 45 55 67 78 88
+RHS:
+1is fired!!!!!!!!!
+end
+rule: 2
+LHS:
+11 22 33 44 55 66 77 88
+2 2 2 2 2 2 2 88
+46 68 80 22 33 44 55 88
+543 314 123 1234 54 356 23 88
+RHS:
+2 is fired!!!!!!!!!
+end
+rule: 3
+LHS:
+11 22 33 44 55 66 77 88
+1 1 1 1 1 1 1 88
+2 2 2 2 2 2 2 88
+RHS:
+3 is fired!!!!!!!!!
+end
+
+rule: 4
+LHS:
+2 2 2 2 2 2 2 88
+1 2 3 4 5 6 7 88
+54 123 43 56 32 4 56 88
+1 1 1 1 1 1 1 88
+14 56 23 45 76 1 34 88
+RHS:
+4 is fired!!!!!!!!!
+end
+
+rule: 5
+LHS:
+32 45 65 29 83 567 7 88
+766 23 412 45 6 12 86 88
+1 1 1 1 1 1 1 88
+3 3 3 3 3 3 3 88
+2 2 2 2 2 2 2 88
+RHS:
+5 is fired!!!!!!!!!
+end
+
+rule: 6
+LHS:
+37 35 65 59 34 547 74 88
+87 12 38 47 19 30 38 88
+3 3 3 3 3 3 3 88
+2 2 2 2 2 2 2 88
+00 91 38 13 84 75 26 88
+RHS:
+6 is fired!!!!!!!!!
+end
+
+rule: 7
+LHS:
+65 42 46 76 134 54 6 88
+93 18 93 46 92 36 66 88
+1 1 1 1 1 1 1 88
+3 3 3 3 3 3 3 88
+2 2 2 2 2 2 2 88
+RHS:
+7 is fired!!!!!!!!!
+end
+
+rule: 8
+LHS:
+84 72 62 48 59 109 47 88
+2 2 2 2 2 2 2 88
+1 1 1 1 1 1 1 88
+8 7244 532 4 72 31 5 88
+76 42 19 305 48 3 475 88
+RHS:
+8 is fired!!!!!!!!!
+end
+  
+
+and the test data :  
+37 35 65 59 34 547 74 88
+87 12 38 47 19 30 38 88
+3 3 3 3 3 3 3 88
+00 91 38 13 84 75 26 88
+2 2 2 2 2 2 2 88
+65 42 46 76 134 54 6 88 
+93 18 93 46 92 36 66 88
+1 1 1 1 1 1 1 88
+54 123 43 56 32 4 56 88
+11 22 33 44 55 66 77 88
+

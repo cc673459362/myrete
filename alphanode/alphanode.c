@@ -165,8 +165,9 @@ void alphanode::alphanodeactivation(boost::shared_ptr<myWME>& w){
 #endif			
 	}
 	if(this->_am!=NULL){ //the next node is alpha memory
+		std::cout<<"insert into alphamemory ---->"<<std::endl;
 		(this->_am)->addmyWME(w);
-		std::cout<<"insert into alphamemory "<<std::endl;
+		
 	}
 	for(std::list<boost::shared_ptr<alphanode> >::iterator it=_alp.begin();it!=_alp.end();it++){
 		(*it)->alphanodeactivation(w);

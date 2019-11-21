@@ -92,12 +92,20 @@ alphamemory::~alphamemory(){
 //create btree
 void alphamemory::createbtree(const int &degree){
 	if(_broot!=NULL){
+#ifdef DEBUG
+		std::cout<<"-----------------------------"<<std::endl;
 		std::cout<<"the am has created btree!!"<<std::endl;
+		std::cout<<"-----------------------------"<<std::endl;
+#endif
 		return;
 	}
 	int m=degree;
 	int n=_childrennode.size();
+#ifdef DEBUG
+	std::cout<<"-----------------------------"<<std::endl;
 	std::cout<<"the am has "<<n<<" childrennode!"<<std::endl;
+	std::cout<<"-----------------------------"<<std::endl;
+#endif
 	_broot=boost::make_shared<btree>(1,n,m);
 	
 	createchildnode(_broot,1,n,m);
@@ -111,8 +119,8 @@ void alphamemory::createchildnode(boost::shared_ptr<btree> &root,const int &fron
 
 		re->setleaf(true);
 #ifdef DEBUG
-		std::cout<<" set the btree node is leaf node:"<<backseq<<" "<<frontseq<<std::endl;
-		std::cout<<re->getleaf()<<std::endl;
+		std::cout<<" set the btree node is leaf node:"<<frontseq<<" "<<backseq<<std::endl;
+		std::cout<<"the node is leaf?: "<<re->getleaf()<<std::endl;
 #endif
 		int count=1;
 		std::vector<boost::shared_ptr<joinnode> > leafnode;
@@ -133,9 +141,15 @@ void alphamemory::createchildnode(boost::shared_ptr<btree> &root,const int &fron
 		std::vector<boost::shared_ptr<btree> > children=root->getchildren();
 		n=n/degree;
 		for(int i=0;i<degree;i++){
-			boost::shared_ptr<btree> re=boost::make_shared<btree>(frontseq+i*n,std::min(frontseq+i*n+n-1,backseq),degree);
-			std::cout<<"make the btree node front: "<<frontseq+i*n<<" back: "<<std::min(frontseq+i*n+n-1,backseq)<<std::endl;
+			if(i!=degree-1){
+				boost::shared_ptr<btree> re=boost::make_shared<btree>(frontseq+i*n,frontseq+i*n+n-1,degree);
+				std::cout<<"make the btree node front: "<<frontseq+i*n<<" back: "<<frontseq+i*n+n-1<<std::endl;
 			children.push_back(re);
+			}else{
+				boost::shared_ptr<btree> re=boost::make_shared<btree>(frontseq+i*n,backseq,degree);
+				std::cout<<"make the btree node front: "<<frontseq+i*n<<" back: "<<backseq<<std::endl;
+			children.push_back(re);
+			}
 		}
 		root->setchildren(children);
 		children=root->getchildren();
@@ -184,7 +198,7 @@ void alphamemory::addmyWME(boost::shared_ptr<myWME> &w){
 	std::cout<<"--am get into btree activation--"<<std::endl;
 #endif
 	boost::shared_ptr<btree> broot=this->_broot;
-
+/*
 	std::cout<<broot->getbackseq()<<" "<<broot->getfrontseq()<<std::endl;
 	std::cout<<"broot is leaf?" <<broot->getleaf()<<std::endl;
 	std::cout<<"broot's children size: "<<broot->getchildren().size()<<std::endl;
@@ -192,7 +206,7 @@ void alphamemory::addmyWME(boost::shared_ptr<myWME> &w){
 	std::cout<<broot->getchildren()[0]->getfrontseq()<<" "<<std::endl;
 	std::cout<<broot->getchildren()[0]->getbackseq()<<" "<<std::endl;
 	std::cout<<broot->getchildren()[0]->getempty()<<" "<<std::endl;
-
+*/
 	curempty(_broot,w);
 #endif
 
@@ -206,7 +220,7 @@ void curempty(boost::shared_ptr<btree> &root,boost::shared_ptr<myWME> &w){
 #endif
 
 	if(root->getleaf()){//if the node is leaf node
-	std::cout<<"error test11111113333"<<std::endl;
+	std::cout<<"the node :"<<root->getfrontseq()<<"-->"<<root->getbackseq()<<"is leafnode!"<<std::endl;
 		for(std::vector<boost::shared_ptr<joinnode> > ::iterator it=root->getleafnode().begin();it!=root->getleafnode().end();it++){
 			(*it)->join_node_right_activation(w);
 		}
@@ -214,29 +228,29 @@ void curempty(boost::shared_ptr<btree> &root,boost::shared_ptr<myWME> &w){
 	}
 	
 	if(!(root->getleaf())){//if the btree node is not a leaf node
-std::cout<<"error test1111111111111"<<std::endl;
-		std::cout<<root->getleaf()<<std::endl;
-		std::cout<<root->getleafnode().size()<<std::endl;
+//std::cout<<"error test1111111111111"<<std::endl;
+		//std::cout<<root->getleaf()<<std::endl;
+		//std::cout<<root->getleafnode().size()<<std::endl;
 		
-		std::cout<<root->getchildren().size()<<std::endl;
+		//std::cout<<root->getchildren().size()<<std::endl;
 //root->getchildren();
-std::cout<<"error test11111111222"<<std::endl;
+//std::cout<<"error test11111111222"<<std::endl;
 		for(std::vector<boost::shared_ptr<btree> >::iterator it2=(root->getchildren()).begin();it2!=(root->getchildren()).end();it2++){
-std::cout<<"error test11111111222"<<std::endl;
-std::cout<<root->getchildren()[0]->getbackseq()<<" "<<std::endl;
+//std::cout<<"error test11111111222"<<std::endl;
+//std::cout<<root->getchildren()[0]->getbackseq()<<" "<<std::endl;
 if(*it2==NULL){
 		std::cout<<"curempty--> it==NULL"<<std::endl;
 	}
-std::cout<<(*it2)->getfrontseq()<<std::endl;
-std::cout<<(*it2)->getbackseq()<<std::endl;
-std::cout<<(*it2)->getempty()<<std::endl;
-std::cout<<"error test32"<<std::endl;
+std::cout<<"the btreenode frontseq: "<<(*it2)->getfrontseq()<<std::endl;
+std::cout<<"the btreenode backseq:  "<<(*it2)->getbackseq()<<std::endl;
+//std::cout<<(*it2)->getempty()<<std::endl;
+//std::cout<<"error test32"<<std::endl;
 			if((*it2)->getempty()){
-std::cout<<"error test11324352"<<std::endl;
-				return;
+std::cout<<"the btree node is empty!"<<std::endl;
+				continue;
 			}
 			else{
-std::cout<<"error test111111114352"<<std::endl;
+//std::cout<<"error test111111114352"<<std::endl;
 				curempty(*it2,w);
 			}
 
